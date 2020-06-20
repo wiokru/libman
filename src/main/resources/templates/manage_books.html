@@ -52,15 +52,11 @@
                 <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/add_book(id = ${currentUser.getId()})}">
                     ADD NEW BOOK
                 </a>
-            </div>
 
-            <div class="container-login100-form-btn p-t-25 p-b-35">
                 <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/reservations(id = ${currentUser.getId()})}">
                     MANAGE RESERVATIONS
                 </a>
-            </div>
 
-            <div class="container-login100-form-btn p-t-25 p-b-35">
                 <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/borrowed(id = ${currentUser.getId()})}">
                     MANAGE BORROWED
                 </a>

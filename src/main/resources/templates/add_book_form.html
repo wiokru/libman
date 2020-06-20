@@ -18,6 +18,8 @@
 <body>
 
 <!--/*@thymesVar id="currentUser" type="com.wiokru.library.entity.User"*/-->
+<!--/*@thymesVar id="authorsList" type="java.util.List"*/-->
+<!--/*@thymesVar id="categoriesList" type="java.util.List"*/-->
 
 <div class="limiter">
     <div class="container-login100">
@@ -90,7 +92,32 @@
                         </span>
                 </div>
 
-                <div class="m-l-4 p-t-4">
+                <table border="1">
+                    <th:block th:each="author : ${authorsList}">
+                        <tr>
+                            <td th:text="${author.getName()}"></td>
+                            <th:block>
+                                <td><input type="checkbox" id="selected_author" name="selected_author" th:value="${author.getId()}" /></td>
+                            </th:block>
+
+                        </tr>
+                    </th:block>
+                </table>
+
+                <table border="1">
+                    <th:block th:each="category : ${categoriesList}">
+                        <tr>
+                            <td th:text="${category.getName()}"></td>
+                            <th:block>
+                                <td><input type="checkbox" id="selected_category" name="selected_category" th:value="${category.getId()}" /></td>
+                            </th:block>
+
+                        </tr>
+                    </th:block>
+                </table>
+
+
+                    <div class="m-l-4 p-t-4">
                     <!--/*@thymesVar id="error_message" type="java.lang.String"*/-->
                     <label class="error-message" th:text="${error_message}"></label>
                 </div>

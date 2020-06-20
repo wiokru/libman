@@ -32,7 +32,6 @@ public class ManageBooksController {
     private BookCategoryRepository categoryRepository;
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private Book newBook;
 
     @GetMapping("/user/{id}/manage_books")
     public ModelAndView manageBooks(@PathVariable("id") Long id) {
@@ -53,7 +52,7 @@ public class ManageBooksController {
 
     @PostMapping("/user/{id}/manage_books")
     public ModelAndView searchBooks(@PathVariable("id") Long id,
-                                   @ModelAttribute("search_text") String search_text) {
+                                    @ModelAttribute("search_text") String search_text) {
 
         ModelAndView modelAndView = new ModelAndView("manage_books");
         Optional<User> currentUser = userRepository.findById(id);
@@ -84,7 +83,7 @@ public class ManageBooksController {
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.BOOK_DELETED_LOG);
 
-        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
 
     @GetMapping("/user/{id}/manage_books/edit/{book_id}")
@@ -128,8 +127,7 @@ public class ManageBooksController {
             modelAndView.addObject("is_success", Boolean.TRUE);
             modelAndView.addObject("message", Const.BOOK_UPDATED_SUCCESS);
             return modelAndView;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.setLevel(Level.INFO);
             LOGGER.info(book_id + Const.BOOK_UPDATED_ERROR_LOG + e.getMessage());
 
@@ -147,31 +145,34 @@ public class ManageBooksController {
         User currentUser = userRepository.findById(id).get();
 
         ModelAndView modelAndView = new ModelAndView("add_book_form");
+        modelAndView.addObject("authorsList", authorRepository.findAll());
+        modelAndView.addObject("categoriesList", categoryRepository.findAll());
         modelAndView.addObject("currentUser", currentUser);
         return modelAndView;
     }
 
     @PostMapping("/user/{id}/manage_books/add_book")
-    public ModelAndView populateBookFields(@PathVariable("id") Long id,
-                                @ModelAttribute("title") String title,
-                                @ModelAttribute("description") String description,
-                                @ModelAttribute("publisher") String publisher,
-                                @ModelAttribute("published_date") String publishedDate,
-                                @ModelAttribute("page_count") String pageCount) {
+    public ModelAndView addNewBook(@PathVariable("id") Long id,
+                                           @ModelAttribute("title") String title,
+                                           @ModelAttribute("description") String description,
+                                           @ModelAttribute("publisher") String publisher,
+                                           @ModelAttribute("published_date") String publishedDate,
+                                           @ModelAttribute("page_count") String pageCount,
+                                           @RequestParam("selected_author") List<Long> authorsIds,
+                                           @RequestParam("selected_category") List<Long> categoriesIds) {
         User currentUser = userRepository.findById(id).get();
+        Book newBook = setupNewBook(title, description, publisher, publishedDate, pageCount, authorsIds, categoriesIds);
+        bookRepository.save(newBook);
 
-        newBook = new Book(title, publisher, publishedDate, description, Integer.valueOf(pageCount));
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.BOOK_ADDED_LOG);
 
-        ModelAndView modelAndView = new ModelAndView("add_book_authors_form");
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("authorsList", authorRepository.findAll());
-        return modelAndView;
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
 
-    @GetMapping("/user/{id}/manage_books/add_book/add_category")
-    public ModelAndView addBookAuthors(@PathVariable("id") Long id,
-                                       @ModelAttribute("chosenElements") List<Long> authorsIds) {
-        User currentUser = userRepository.findById(id).get();
+    private Book setupNewBook(String title, String description, String publisher, String publishedDate,
+                              String pageCount, List<Long> authorsIds, List<Long> categoriesIds) {
+        Book newBook = new Book(title, publisher, publishedDate, description, Integer.valueOf(pageCount));
 
         Set<Author> authorSet = new HashSet<>();
         for (Long authorId : authorsIds) {
@@ -179,28 +180,11 @@ public class ManageBooksController {
         }
         newBook.setAuthors(authorSet);
 
-        ModelAndView modelAndView = new ModelAndView("add_book_categories_form");
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("categoriesList", categoryRepository.findAll());
-        return modelAndView;
-    }
-
-    @PostMapping("/user/{id}/manage_books/add_book/add_category")
-    public ModelAndView saveNewBook(@PathVariable("id") Long id,
-                                       @ModelAttribute("chosenElements") List<Long> categoriesIds) {
-        User currentUser = userRepository.findById(id).get();
-
         Set<BookCategory> bookCategories = new HashSet<>();
         for (Long bookCatId : categoriesIds) {
             bookCategories.add(categoryRepository.findById(bookCatId).get());
         }
         newBook.setCategories(bookCategories);
-
-        bookRepository.save(newBook);
-
-        LOGGER.setLevel(Level.INFO);
-        LOGGER.info(Const.BOOK_ADDED_LOG);
-
-        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+        return newBook;
     }
 }
