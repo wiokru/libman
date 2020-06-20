@@ -1,0 +1,60 @@
+package com.wiokru.library.controllers;
+
+import com.wiokru.library.entity.User;
+import com.wiokru.library.repositories.UserRepository;
+import com.wiokru.library.utils.Const;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+@RestController
+public class HomeController {
+    @Autowired
+    private UserRepository userRepository;
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    @GetMapping("/")
+    public ModelAndView home() {
+        return new ModelAndView("home");
+    }
+
+    @PostMapping("/")
+    public ModelAndView login(Model model,
+                              @ModelAttribute("email") String email,
+                              @ModelAttribute("password") String password) {
+
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(password)) {
+                LOGGER.setLevel(Level.INFO);
+                LOGGER.info(user.get().getEmail() + Const.LOGIN_SUCCESS_LOG);
+
+                return new ModelAndView("redirect:/user/" + user.get().getId().toString() + "/home");
+            }
+            else {
+                //PASSWORD INCORRECT
+                LOGGER.setLevel(Level.INFO);
+                LOGGER.info(user.get().getEmail() + Const.WRONG_PASSWORD_LOG);
+                ModelAndView modelAndView = new ModelAndView("home");
+                modelAndView.addObject("error_message", Const.INCORRECT_PASSWORD);
+                return modelAndView;
+            }
+        }
+        else {
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(email + Const.USER_DONT_EXISTS_LOG);
+            ModelAndView modelAndView = new ModelAndView("home");
+            modelAndView.addObject("error_message", Const.USER_DONT_EXISTS);
+            return modelAndView;
+        }
+    }
+}

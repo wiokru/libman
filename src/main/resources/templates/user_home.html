@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/utils.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+
+    <title>LibMan</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
+<!--/*@thymesVar id="currentUser" type="com.wiokru.library.entity.User"*/-->
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div id="mySidenav" class="sidenav">
+            <a th:href="@{/user/{id}/home(id = ${currentUser.getId()})}" id="dashboard"> Home <i
+                    class="icon fa fa-home fa-2x"></i></a>
+            <a th:href="@{/user/{id}/my_books(id = ${currentUser.getId()})}" id="my_books"> My books <i
+                    class="icon fa fa-th-list fa-2x"></i></a>
+            <a th:href="@{/user/{id}/my_info(id = ${currentUser.getId()})}" id="my_info"> My info <i
+                    class="icon fa fa-user fa-2x"></i></a>
+            <a href="/" id="logout"> Logout <i class="icon fa fa-sign-out fa-2x"></i></a>
+            <div th:if="${currentUser.isAdmin()}">
+                <a th:href="@{/user/{id}/manage_users(id = ${currentUser.getId()})}" id="manage_users_admin"> Users <i
+                        class="icon fa fa-users fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_book_admin"> Books <i
+                        class="icon fa fa-book fa-2x"></i></a>
+            </div>
+            <div th:if="${currentUser.isLibrarian()}">
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
+                        class="icon fa fa-book fa-2x"></i></a>
+            </div>
+        </div>
+
+        <div class="wrap-login300 p-l-50 p-r-50 p-t-55 p-b-30">
+            <span class="login100-form-title p-b-20">
+                <label th:text="${'Welcome ' + currentUser.getName() + ' ' + currentUser.getSurname() + '!'}"></label>
+            </span>
+
+            <div class="container-login100-form-btn p-t-25">
+                <form class="login100-form validate-form" th:method="POST">
+                    <div class="search-input-container">
+                        <div class="wrap-input100 m-b-16">
+                            <input class="input100" type="text" th:name="search_text" placeholder="Search for books...">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                        <span class="lnr lnr-magnifier"></span>
+                    </span>
+                        </div>
+                    </div>
+                    <div class="search-button-container">
+                        <button type="submit" class="login100-form-btn">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${!bookList.isEmpty()}">
+                <ul th:object="${bookList}" id="userTable" border="1">
+                    <li th:each="book :${bookList}">
+                        <p class="book-title" th:text="${book.getTitle()}"></p>
+                        <p class="book-author" th:text="${book.listAuthors()}"></p>
+                        <p th:utext="${book.getDescription()}"></p>
+                        <br>
+                        <p class="lnr-question-circle">
+                            <span class="book-category"
+                                  th:text="${book.listCategories()}"></span> </p>
+                        <p> <span class="book-page-count"
+                                                      th:text="${'Pages: ' + book.getPageCount()}"></span></p>
+                        <p class="lnr lnr-book">  <span class="book-publisher"
+                                                            th:text="${book.getPublisher()}"></span></p>
+                        <p class="lnr lnr-calendar-full">  <span class="book-publisher-date"
+                                                               th:text="${book.getPublishedDate()}"></span></p>
+                        <div class="symbol-links100">
+                            <a th:href="@{/user/{id}/home/borrow_book/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span class="icon-lnr-100 lnr lnr-plus-circle"></span></a>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${bookList.isEmpty()}">
+                <label class="login100-form-label p-b-35 p-l-2 p-r-2">
+                    Unfortunately we don't have this book yet. Try again in some time :)
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

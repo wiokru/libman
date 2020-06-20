@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/utils.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+
+    <title>LibMan</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="currentUser" type="com.wiokru.library.entity.User"*/-->
+<!--/*@thymesVar id="selectedUser" type="com.wiokru.library.entity.User"*/-->
+<!--/*@thymesVar id="is_success" type="java.lang.Boolean"*/-->
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div id="mySidenav" class="sidenav">
+            <a th:href="@{/user/{id}/home(id = ${currentUser.getId()})}" id="dashboard"> Home <i
+                    class="icon fa fa-home fa-2x"></i></a>
+            <a th:href="@{/user/{id}/my_books(id = ${currentUser.getId()})}" id="my_books"> My books <i
+                    class="icon fa fa-th-list fa-2x"></i></a>
+            <a th:href="@{/user/{id}/my_info(id = ${currentUser.getId()})}" id="my_info"> My info <i
+                    class="icon fa fa-user fa-2x"></i></a>
+            <a href="/" id="logout"> Logout <i class="icon fa fa-sign-out fa-2x"></i></a>
+            <div th:if="${currentUser.isAdmin()}">
+                <a th:href="@{/user/{id}/manage_users(id = ${currentUser.getId()})}" id="manage_users_admin"> Users <i
+                        class="icon fa fa-users fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_book_admin"> Books <i
+                        class="icon fa fa-book fa-2x"></i></a>
+            </div>
+            <div th:if="${currentUser.isLibrarian()}">
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
+                        class="icon fa fa-book fa-2x"></i></a>
+            </div>
+        </div>
+
+        <div class="wrap-login300 p-l-50 p-r-50 p-t-55 p-b-30">
+            <form class="login100-form validate-form" th:method="POST">
+            <span class="login100-form-title p-b-20">
+                    Your data
+            </span>
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Invalid email">
+                    <input class="input100" type="text" th:name="email" th:value="${selectedUser.getEmail()}">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Name is required">
+                    <input class="input100" type="text" th:name="name" th:value="${selectedUser.getName()}">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                            <span class="lnr lnr-user"></span>
+                        </span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Surname is required">
+                    <input class="input100" type="text" th:name="surname" th:value="${selectedUser.getSurname()}">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                            <span class="lnr lnr-user"></span>
+                        </span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Nick is required">
+                    <input class="input100" type="text" th:name="city" th:value="${selectedUser.getCity()}">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Wrong phone number">
+                    <input class="input100" type="tel" th:name="phone" th:value="${selectedUser.getPhone()}">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                            <span class="lnr lnr-phone"></span>
+                    </span>
+                </div>
+
+
+                <div th:if="${is_success}">
+                    <div class="m-l-4 p-t-4">
+                        <label class="info-message" th:text="${message}"></label>
+                    </div>
+                </div>
+                <div th:unless="${is_success}">
+                    <div class="m-l-4 p-t-4">
+                        <label class="error-message" th:text="${message}"></label>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn p-t-15">
+                    <div class="button-wrap-container">
+                        <button type="submit" class="login100-form-btn">
+                            Save
+                        </button>
+                    </div>
+                    <div class="button-wrap-container">
+                        <a th:href="@{/user/{id}/manage_users(id = ${currentUser.getId()})}" class="login100-form-btn">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
