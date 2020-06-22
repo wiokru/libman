@@ -182,7 +182,14 @@ public class UserHomeController {
             modelAndView.addObject("message", Const.RESERVATION_FAILED_USER_INFO);
 
             return modelAndView;
-        } else {
+        }
+        else if (reservedRepository.findAllByUser(currentUser).size() > Const.RESERVED_PER_USER_LIMIT) {
+            modelAndView.addObject("failed", Boolean.TRUE);
+            modelAndView.addObject("message", Const.RESERVATION_FAILED_LIMIT_INFO);
+
+            return modelAndView;
+        }
+        else {
             Reserved reserved = new Reserved(book, currentUser);
             reservedRepository.save(reserved);
 

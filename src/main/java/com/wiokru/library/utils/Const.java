@@ -33,7 +33,11 @@ public class Const {
         public static final String ALL_RESERVATIONS_SIZE = "All reserved books list size: ";
         public static final String ALL_BORROWED_SIZE = "All borrowed books list size: ";
         public static final String ALL_USERS_SIZE = "All users list size: ";
+
         public static final int RESERVED_VALID_DAYS = 5;
         public static final int BORROWED_VALID_DAYS = 30;
+        public static final int RESERVED_PER_USER_LIMIT = 3;
+
         public static final String RESERVATION_FAILED_USER_INFO = "We're sorry, this book is already reserved or borrowed. Please try again in few days or contact our team.";
+        public static final String RESERVATION_FAILED_LIMIT_INFO = "We're sorry, you've exceeded your reservation limit.";
     }
