@@ -10,7 +10,9 @@ public class Const {
         public static final String WRONG_PASSWORD_LOG = " Wrong password";
         public static final String USER_DONT_EXISTS_LOG = " - user with that email don't exists";
         public static final String BOOK_ADDED_LOG = "New book saved to database";
+        public static final String AUTHOR_ADDED_LOG = "New author saved to database";
         public static final String SAVING_BOOK_ERROR_LOG = "Saving book error.";
+        public static final String SAVING_AUTHOR_ERROR_LOG = "Saving author error.";
         public static final String BOOK_DELETED_LOG = "Book deleted successfully.";
         public static final String USER_DELETED_LOG = "User deleted successfully.";
         public static final String BOOK_RESERVED_LOG = "Book reserved successfully.";

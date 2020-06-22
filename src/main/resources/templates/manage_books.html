@@ -58,6 +58,12 @@
                 </div>
                 <div class="search-button-container">
                     <a class="login100-form-btn"
+                       th:href="@{/user/{id}/manage_books/add_author(id = ${currentUser.getId()})}">
+                        ADD NEW AUTHOR
+                    </a>
+                </div>
+                <div class="search-button-container">
+                    <a class="login100-form-btn"
                        th:href="@{/user/{id}/manage_books/reservations(id = ${currentUser.getId()})}">
                         MANAGE RESERVATIONS
                     </a>
