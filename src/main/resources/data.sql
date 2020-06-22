@@ -3,8 +3,8 @@ INSERT INTO role (name) VALUES
 
 INSERT INTO users (email, password, name, surname) VALUES
 ('admin@mail.com', 'test', 'Karol', 'Szulc'),
-('librarian@mail.com', 'test', 'Magda', 'Tara'),
-('user1@mail.com', 'test', 'Celina', 'Lada');
+('librarian@mail.com', 'test', 'Magda', 'Dymek'),
+('user1@mail.com', 'test', 'Celina', 'Zalewska');
 
 INSERT INTO user_role (user_id, role_id) VALUES
 (1, 1),
