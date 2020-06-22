@@ -18,6 +18,7 @@ public class ScheduledTasks {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    //fired daily
     @Scheduled(initialDelay = 1000, fixedRate = 86400000)
     public void overtimeReservations() {
 
