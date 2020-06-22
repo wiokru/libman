@@ -52,18 +52,13 @@ public class ManageBooksController {
 
     @PostMapping("/user/{id}/manage_books")
     public ModelAndView searchBooks(@PathVariable("id") Long id,
-                                    @ModelAttribute("search_text") String search_text) {
+                                    @ModelAttribute("search_text") String searchedText) {
 
         ModelAndView modelAndView = new ModelAndView("manage_books");
         Optional<User> currentUser = userRepository.findById(id);
+        String[] searchWords = searchedText.toLowerCase().split(" ");
 
-        List<Book> books = bookRepository.findAll()
-                .stream()
-                .filter(book -> StringUtils.containsIgnoreCase(book.getTitle(), search_text)
-                        || StringUtils.containsIgnoreCase(book.listAuthors(), search_text)
-                        || StringUtils.containsIgnoreCase(book.getPublisher(), search_text))
-                .sorted(Comparator.comparing(Book::getTitle))
-                .collect(Collectors.toList());
+        List<Book> books = searchBooks(searchWords);
 
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.ALL_BOOKS_SIZE + books.size());
@@ -202,5 +197,30 @@ public class ManageBooksController {
         }
         newBook.setCategories(bookCategories);
         return newBook;
+    }
+
+    private List<Book> searchBooks(String[] searchedWords) {
+        List<Book> bookList;
+
+        bookList = bookRepository.findAll()
+                .stream()
+                .filter(book ->
+                        StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
+                                && StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords))
+                .sorted(Comparator.comparing(Book::getTitle))
+                .collect(Collectors.toList());
+
+        if (bookList.isEmpty()){
+            bookList = bookRepository.findAll()
+                    .stream()
+                    .filter(book ->
+                            StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
+                                    || StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords)
+                                    || StringUtils.containsAny(book.getPublisher().toLowerCase(), searchedWords))
+                    .sorted(Comparator.comparing(Book::getTitle))
+                    .collect(Collectors.toList());
+        }
+
+        return bookList;
     }
 }
