@@ -129,22 +129,13 @@ public class UserHomeController {
 
     @PostMapping("/user/{id}/home")
     public ModelAndView searchAllBooks(@PathVariable("id") Long id,
-                                       @ModelAttribute("search_text") String search_text) {
+                                       @ModelAttribute("search_text") String searchedText) {
 
         ModelAndView modelAndView = new ModelAndView("user_home");
         Optional<User> currentUser = userRepository.findById(id);
-        String[] search_words = search_text.toLowerCase().split(" ");
+        String[] searchWords = searchedText.toLowerCase().split(" ");
 
-        List<Book> bookList = bookRepository.findAll()
-                .stream()
-                .filter(book -> StringUtils.containsIgnoreCase(book.getTitle(), search_text)
-                        || StringUtils.containsIgnoreCase(book.listAuthors(), search_text)
-                        || StringUtils.containsIgnoreCase(book.getPublisher(), search_text)
-                        || StringUtils.containsAny(book.getTitle().toLowerCase(), search_words)
-                        || StringUtils.containsAny(book.listAuthors().toLowerCase(), search_words)
-                        || StringUtils.containsAny(book.listAuthors().toLowerCase(), search_words))
-                .sorted(Comparator.comparing(Book::getTitle))
-                .collect(Collectors.toList());
+        List<Book> bookList = searchBooks(searchWords);
 
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.ALL_BOOKS_SIZE + bookList.size());
@@ -182,14 +173,12 @@ public class UserHomeController {
             modelAndView.addObject("message", Const.RESERVATION_FAILED_USER_INFO);
 
             return modelAndView;
-        }
-        else if (reservedRepository.findAllByUser(currentUser).size() > Const.RESERVED_PER_USER_LIMIT) {
+        } else if (reservedRepository.findAllByUser(currentUser).size() > Const.RESERVED_PER_USER_LIMIT) {
             modelAndView.addObject("failed", Boolean.TRUE);
             modelAndView.addObject("message", Const.RESERVATION_FAILED_LIMIT_INFO);
 
             return modelAndView;
-        }
-        else {
+        } else {
             Reserved reserved = new Reserved(book, currentUser);
             reservedRepository.save(reserved);
 
@@ -198,5 +187,30 @@ public class UserHomeController {
 
             return new ModelAndView("redirect:/user/" + currentUser.getId() + "/home");
         }
+    }
+
+    private List<Book> searchBooks(String[] searchedWords) {
+        List<Book> bookList;
+
+        bookList = bookRepository.findAll()
+                .stream()
+                .filter(book ->
+                        StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
+                                && StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords))
+                .sorted(Comparator.comparing(Book::getTitle))
+                .collect(Collectors.toList());
+
+        if (bookList.isEmpty()){
+            bookList = bookRepository.findAll()
+                    .stream()
+                    .filter(book ->
+                            StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
+                                    || StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords)
+                                    || StringUtils.containsAny(book.getPublisher().toLowerCase(), searchedWords))
+                    .sorted(Comparator.comparing(Book::getTitle))
+                    .collect(Collectors.toList());
+        }
+
+        return bookList;
     }
 }
