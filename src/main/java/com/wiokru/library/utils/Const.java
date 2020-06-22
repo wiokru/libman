@@ -13,6 +13,8 @@ public class Const {
         public static final String AUTHOR_ADDED_LOG = "New author saved to database";
         public static final String SAVING_BOOK_ERROR_LOG = "Saving book error.";
         public static final String SAVING_AUTHOR_ERROR_LOG = "Saving author error.";
+        public static final String CATEGORY_ADDED_LOG = "New category added";
+        public static final String SAVING_CATEGORY_ERROR_LOG = "Error while saving new category";
         public static final String BOOK_DELETED_LOG = "Book deleted successfully.";
         public static final String USER_DELETED_LOG = "User deleted successfully.";
         public static final String BOOK_RESERVED_LOG = "Book reserved successfully.";
@@ -40,4 +42,4 @@ public class Const {
 
         public static final String RESERVATION_FAILED_USER_INFO = "We're sorry, this book is already reserved or borrowed. Please try again in few days or contact our team.";
         public static final String RESERVATION_FAILED_LIMIT_INFO = "We're sorry, you've exceeded your reservation limit.";
-    }
+}

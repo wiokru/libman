@@ -20,4 +20,9 @@ public class BookCategory implements Serializable {
 
     @Column(name = "name", unique = true)
     private String name;
+
+    public BookCategory(String name) {
+        this.name = name;
+    }
+
 }

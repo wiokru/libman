@@ -4,9 +4,12 @@ import com.wiokru.library.entity.Author;
 import com.wiokru.library.entity.Book;
 import com.wiokru.library.entity.BookCategory;
 import com.wiokru.library.entity.User;
-import com.wiokru.library.repositories.*;
+import com.wiokru.library.repositories.AuthorRepository;
+import com.wiokru.library.repositories.BookCategoryRepository;
+import com.wiokru.library.repositories.BookRepository;
+import com.wiokru.library.repositories.UserRepository;
+import com.wiokru.library.utils.BookUtils;
 import com.wiokru.library.utils.Const;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,7 +61,7 @@ public class ManageBooksController {
         Optional<User> currentUser = userRepository.findById(id);
         String[] searchWords = searchedText.toLowerCase().split(" ");
 
-        List<Book> books = searchBooks(searchWords);
+        List<Book> books = BookUtils.filterBooks(searchWords, bookRepository);
 
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.ALL_BOOKS_SIZE + books.size());
@@ -197,30 +200,5 @@ public class ManageBooksController {
         }
         newBook.setCategories(bookCategories);
         return newBook;
-    }
-
-    private List<Book> searchBooks(String[] searchedWords) {
-        List<Book> bookList;
-
-        bookList = bookRepository.findAll()
-                .stream()
-                .filter(book ->
-                        StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
-                                && StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords))
-                .sorted(Comparator.comparing(Book::getTitle))
-                .collect(Collectors.toList());
-
-        if (bookList.isEmpty()){
-            bookList = bookRepository.findAll()
-                    .stream()
-                    .filter(book ->
-                            StringUtils.containsAny(book.getTitle().toLowerCase(), searchedWords)
-                                    || StringUtils.containsAny(book.listAuthors().toLowerCase(), searchedWords)
-                                    || StringUtils.containsAny(book.getPublisher().toLowerCase(), searchedWords))
-                    .sorted(Comparator.comparing(Book::getTitle))
-                    .collect(Collectors.toList());
-        }
-
-        return bookList;
     }
 }

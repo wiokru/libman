@@ -1,8 +1,8 @@
 package com.wiokru.library.controllers;
 
-import com.wiokru.library.entity.Author;
+import com.wiokru.library.entity.BookCategory;
 import com.wiokru.library.entity.User;
-import com.wiokru.library.repositories.AuthorRepository;
+import com.wiokru.library.repositories.BookCategoryRepository;
 import com.wiokru.library.repositories.UserRepository;
 import com.wiokru.library.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,43 +13,44 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-public class AuthorsController {
+public class CategoriesController {
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private BookCategoryRepository categoryRepository;
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 
-    @GetMapping("user/{id}/manage_books/add_author")
+    @GetMapping("user/{id}/manage_books/add_category")
     public ModelAndView addBookForm(@PathVariable("id") Long id) {
         User currentUser = userRepository.findById(id).get();
 
-        ModelAndView modelAndView = new ModelAndView("add_author_form");
+        ModelAndView modelAndView = new ModelAndView("add_category_form");
         modelAndView.addObject("currentUser", currentUser);
         return modelAndView;
     }
 
-    @PostMapping("user/{id}/manage_books/add_author")
+    @PostMapping("user/{id}/manage_books/add_category")
     public ModelAndView addNewBook(@PathVariable("id") Long id,
                                    @ModelAttribute("name") String name) {
         User currentUser = userRepository.findById(id).get();
-        Author newAuthor = new Author(name);
+        BookCategory category = new BookCategory(name);
 
         try {
-            authorRepository.save(newAuthor);
+            categoryRepository.save(category);
 
             LOGGER.setLevel(Level.INFO);
-            LOGGER.info(Const.AUTHOR_ADDED_LOG);
-        } catch (Exception e) {
+            LOGGER.info(Const.CATEGORY_ADDED_LOG);
+        }
+        catch (Exception e){
             LOGGER.setLevel(Level.INFO);
-            LOGGER.info(Const.SAVING_AUTHOR_ERROR_LOG);
+            LOGGER.info(Const.SAVING_CATEGORY_ERROR_LOG);
 
-            ModelAndView modelAndView = new ModelAndView("add_author_form");
+            ModelAndView modelAndView = new ModelAndView("add_category_form");
             modelAndView.addObject("currentUser", currentUser);
-            modelAndView.addObject("message", Const.SAVING_AUTHOR_ERROR_LOG);
+            modelAndView.addObject("message", Const.SAVING_CATEGORY_ERROR_LOG);
             return modelAndView;
         }
 
