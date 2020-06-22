@@ -8,6 +8,7 @@ import com.wiokru.library.repositories.ReservedRepository;
 import com.wiokru.library.repositories.UserRepository;
 import com.wiokru.library.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,7 @@ public class ManageBorrowedController {
 
 
     @GetMapping("/user/{id}/manage_books/borrowed/return/{borrowed_id}")
+    @DeleteMapping("/user/{id}/manage_books/borrowed/return/{borrowed_id}")
     public ModelAndView rejectReserved(@PathVariable("id") Long id,
                                        @PathVariable("borrowed_id") Long borrowed_id) {
         User currentUser = userRepository.findById(id).get();

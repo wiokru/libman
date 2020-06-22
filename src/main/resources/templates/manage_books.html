@@ -112,10 +112,10 @@
                         <td th:text="${book.getPageCount()}"></td>
                         <td>
                             <div class="symbol-links100">
-                                <a th:method="POST"
+                                <a th:method="DELETE"
                                    th:href="@{/user/{id}/manage_books/delete/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span
                                         class="icon-lnr-100 lnr lnr-trash"></span></a>
-                                <a th:href="@{/user/{id}/manage_books/edit/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span
+                                <a th:method="PUT" th:href="@{/user/{id}/manage_books/edit/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span
                                         class="icon-lnr-100 lnr lnr-pencil"></span></a>
                             </div>
                         </td>

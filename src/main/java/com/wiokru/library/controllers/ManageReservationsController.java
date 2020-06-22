@@ -78,6 +78,7 @@ public class ManageReservationsController {
     }
 
     @GetMapping("/user/{id}/manage_books/reservations/reject/{reserved_id}")
+    @DeleteMapping("/user/{id}/manage_books/reservations/reject/{reserved_id}")
     public ModelAndView rejectReserved(@PathVariable("id") Long id,
                                        @PathVariable("reserved_id") Long reserved_id) {
         User currentUser = userRepository.findById(id).get();

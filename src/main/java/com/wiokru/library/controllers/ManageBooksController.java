@@ -74,6 +74,7 @@ public class ManageBooksController {
     }
 
     @GetMapping("/user/{id}/manage_books/delete/{book_id}")
+    @DeleteMapping("/user/{id}/manage_books/delete/{book_id}")
     public ModelAndView deleteBook(@PathVariable("id") Long id,
                                    @PathVariable("book_id") Long book_id) {
         User currentUser = userRepository.findById(id).get();
@@ -99,6 +100,7 @@ public class ManageBooksController {
     }
 
     @PostMapping("/user/{id}/manage_books/edit/{book_id}")
+    @PutMapping("/user/{id}/manage_books/edit/{book_id}")
     public ModelAndView saveEditBook(@PathVariable("id") Long id,
                                      @PathVariable("book_id") Long book_id,
                                      @ModelAttribute("title") String title,

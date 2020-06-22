@@ -90,6 +90,7 @@ public class UserHomeController {
     }
 
     @PostMapping("/user/{id}/my_info")
+    @PutMapping("/user/{id}/my_info")
     public ModelAndView saveEditUserInfo(@PathVariable("id") Long id,
                                          @ModelAttribute("name") String name,
                                          @ModelAttribute("surname") String surname,
@@ -114,8 +115,7 @@ public class UserHomeController {
             modelAndView.addObject("is_success", Boolean.TRUE);
             modelAndView.addObject("message", Const.USER_UPDATED_SUCCESS);
             return modelAndView;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.setLevel(Level.INFO);
             LOGGER.info(email + Const.USER_UPDATED_ERROR_LOG + e.getMessage());
 
@@ -129,16 +129,20 @@ public class UserHomeController {
 
     @PostMapping("/user/{id}/home")
     public ModelAndView searchAllBooks(@PathVariable("id") Long id,
-                                         @ModelAttribute("search_text") String search_text) {
+                                       @ModelAttribute("search_text") String search_text) {
 
         ModelAndView modelAndView = new ModelAndView("user_home");
         Optional<User> currentUser = userRepository.findById(id);
+        String[] search_words = search_text.toLowerCase().split(" ");
 
         List<Book> bookList = bookRepository.findAll()
                 .stream()
                 .filter(book -> StringUtils.containsIgnoreCase(book.getTitle(), search_text)
                         || StringUtils.containsIgnoreCase(book.listAuthors(), search_text)
-                        || StringUtils.containsIgnoreCase(book.getPublisher(), search_text))
+                        || StringUtils.containsIgnoreCase(book.getPublisher(), search_text)
+                        || StringUtils.containsAny(book.getTitle().toLowerCase(), search_words)
+                        || StringUtils.containsAny(book.listAuthors().toLowerCase(), search_words)
+                        || StringUtils.containsAny(book.listAuthors().toLowerCase(), search_words))
                 .sorted(Comparator.comparing(Book::getTitle))
                 .collect(Collectors.toList());
 
@@ -152,7 +156,7 @@ public class UserHomeController {
 
     @GetMapping("/user/{id}/home/borrow_book/{book_id}")
     public ModelAndView confirmReservationBook(@PathVariable("id") Long id,
-                                          @PathVariable("book_id") Long bookId) {
+                                               @PathVariable("book_id") Long bookId) {
         User currentUser = userRepository.findById(id).get();
         Book book = bookRepository.findById(bookId).get();
 
@@ -164,7 +168,7 @@ public class UserHomeController {
 
     @PostMapping("/user/{id}/home/borrow_book/{book_id}")
     public ModelAndView reserveBook(@PathVariable("id") Long id,
-                                   @PathVariable("book_id") Long bookId) {
+                                    @PathVariable("book_id") Long bookId) {
         User currentUser = userRepository.findById(id).get();
         Book book = bookRepository.findById(bookId).get();
 
@@ -172,14 +176,13 @@ public class UserHomeController {
         modelAndView.addObject("selectedBook", book);
         modelAndView.addObject("currentUser", currentUser);
 
-        if(reservedRepository.findByBook(book).isPresent()
-                || borrowedRepository.findByBook(book).isPresent()){
+        if (reservedRepository.findByBook(book).isPresent()
+                || borrowedRepository.findByBook(book).isPresent()) {
             modelAndView.addObject("failed", Boolean.TRUE);
             modelAndView.addObject("message", Const.RESERVATION_FAILED_USER_INFO);
 
             return modelAndView;
-        }
-        else {
+        } else {
             Reserved reserved = new Reserved(book, currentUser);
             reservedRepository.save(reserved);
 

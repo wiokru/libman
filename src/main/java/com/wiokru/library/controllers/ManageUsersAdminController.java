@@ -68,6 +68,7 @@ public class ManageUsersAdminController {
     }
 
     @GetMapping("/user/{id}/manage_users/delete/{user_id}")
+    @DeleteMapping("/user/{id}/manage_users/delete/{user_id}")
     public ModelAndView deleteUser(@PathVariable("id") Long id,
                                    @PathVariable("user_id") Long userId) {
         User currentUser = userRepository.findById(id).get();
@@ -94,6 +95,7 @@ public class ManageUsersAdminController {
     }
 
     @PostMapping("/user/{id}/manage_users/edit/{user_id}")
+    @PutMapping("/user/{id}/manage_users/edit/{user_id}")
     public ModelAndView saveEditUser(@PathVariable("id") Long id,
                                      @PathVariable("user_id") Long userId,
                                      @ModelAttribute("name") String name,
@@ -124,6 +126,7 @@ public class ManageUsersAdminController {
             ModelAndView modelAndView = new ModelAndView("user_edit_form");
             modelAndView.addObject("currentUser", currentUser);
             modelAndView.addObject("selectedUser", user);
+            modelAndView.addObject("rolesList", roleRepository.findAll());
             modelAndView.addObject("is_success", Boolean.TRUE);
             modelAndView.addObject("message", Const.USER_UPDATED_SUCCESS);
             return modelAndView;
@@ -135,6 +138,7 @@ public class ManageUsersAdminController {
             ModelAndView modelAndView = new ModelAndView("user_edit_form");
             modelAndView.addObject("currentUser", currentUser);
             modelAndView.addObject("selectedUser", user);
+            modelAndView.addObject("rolesList", roleRepository.findAll());
             modelAndView.addObject("is_success", Boolean.FALSE);
             modelAndView.addObject("message", Const.USER_UPDATED_ERROR + e.getMessage());
             return modelAndView;
