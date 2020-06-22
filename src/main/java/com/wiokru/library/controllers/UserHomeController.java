@@ -65,10 +65,17 @@ public class UserHomeController {
                 .sorted(Comparator.comparing(Borrowed::getDueDate).reversed())
                 .collect(Collectors.toList());
 
+        List<Reserved> reservedList = reservedRepository.findAllByUser(currentUser.get())
+                .stream()
+                .sorted(Comparator.comparing(Reserved::getDueDate).reversed())
+                .collect(Collectors.toList());
+
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.USER_BOOKS_SIZE + borrowedList.size());
+        LOGGER.info(Const.ALL_RESERVATIONS_SIZE + reservedList.size());
 
         modelAndView.addObject("borrowedList", borrowedList);
+        modelAndView.addObject("reservedList", reservedList);
         modelAndView.addObject("currentUser", currentUser.get());
         return modelAndView;
     }
@@ -149,7 +156,7 @@ public class UserHomeController {
         User currentUser = userRepository.findById(id).get();
         Book book = bookRepository.findById(bookId).get();
 
-        ModelAndView modelAndView = new ModelAndView("book_borrow_confirm");
+        ModelAndView modelAndView = new ModelAndView("book_reservation_confirm");
         modelAndView.addObject("selectedBook", book);
         modelAndView.addObject("currentUser", currentUser);
         return modelAndView;
@@ -161,12 +168,25 @@ public class UserHomeController {
         User currentUser = userRepository.findById(id).get();
         Book book = bookRepository.findById(bookId).get();
 
-        Reserved reserved = new Reserved(book, currentUser);
-        reservedRepository.save(reserved);
+        ModelAndView modelAndView = new ModelAndView("book_reservation_confirm");
+        modelAndView.addObject("selectedBook", book);
+        modelAndView.addObject("currentUser", currentUser);
 
-        LOGGER.setLevel(Level.INFO);
-        LOGGER.info(Const.BOOK_RESERVED_LOG);
+        if(reservedRepository.findByBook(book).isPresent()
+                || borrowedRepository.findByBook(book).isPresent()){
+            modelAndView.addObject("failed", Boolean.TRUE);
+            modelAndView.addObject("message", Const.RESERVATION_FAILED_USER_INFO);
 
-        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/home");
+            return modelAndView;
+        }
+        else {
+            Reserved reserved = new Reserved(book, currentUser);
+            reservedRepository.save(reserved);
+
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(Const.BOOK_RESERVED_LOG);
+
+            return new ModelAndView("redirect:/user/" + currentUser.getId() + "/home");
+        }
     }
 }

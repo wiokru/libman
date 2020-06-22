@@ -77,7 +77,7 @@ public class ManageReservationsController {
         return modelAndView;
     }
 
-    @GetMapping("/user/{id}/manage_reservations/reject/{reserved_id}")
+    @GetMapping("/user/{id}/manage_books/reservations/reject/{reserved_id}")
     public ModelAndView rejectReserved(@PathVariable("id") Long id,
                                        @PathVariable("reserved_id") Long reserved_id) {
         User currentUser = userRepository.findById(id).get();
@@ -91,7 +91,7 @@ public class ManageReservationsController {
         return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books/reservations");
     }
 
-    @GetMapping("/user/{id}/manage_reservations/accept/{reserved_id}")
+    @GetMapping("/user/{id}/manage_books/reservations/accept/{reserved_id}")
     public ModelAndView acceptReserved(@PathVariable("id") Long id,
                                        @PathVariable("reserved_id") Long reserved_id) {
         User currentUser = userRepository.findById(id).get();
@@ -103,7 +103,7 @@ public class ManageReservationsController {
         borrowedRepository.save(borrowed);
 
         LOGGER.setLevel(Level.INFO);
-        LOGGER.info(Const.BOOK_BORROWED_LOG);
+        LOGGER.info(Const.RESERVATION_ACCEPTED_LOG);
 
         return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books/reservations");
     }

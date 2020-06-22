@@ -38,8 +38,9 @@
                         class="icon fa fa-book fa-2x"></i></a>
             </div>
             <div th:if="${currentUser.isLibrarian()}">
-                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
-                        class="icon fa fa-book fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books
+                    <i
+                            class="icon fa fa-book fa-2x"></i></a>
             </div>
         </div>
 
@@ -74,17 +75,18 @@
                         <p class="book-author" th:text="${book.listAuthors()}"></p>
                         <p th:utext="${book.getDescription()}"></p>
                         <br>
-                        <p class="lnr-question-circle">
-                            <span class="book-category"
-                                  th:text="${book.listCategories()}"></span> </p>
                         <p> <span class="book-page-count"
-                                                      th:text="${'Pages: ' + book.getPageCount()}"></span></p>
+                                  th:text="${'Pages: ' + book.getPageCount()}"></span></p>
+                        <p class="lnr lnr-question-circle">
+                            <span class="book-category"
+                                  th:text="${book.listCategories()}"></span></p>
                         <p class="lnr lnr-book">  <span class="book-publisher"
-                                                            th:text="${book.getPublisher()}"></span></p>
+                                                        th:text="${book.getPublisher()}"></span></p>
                         <p class="lnr lnr-calendar-full">  <span class="book-publisher-date"
-                                                               th:text="${book.getPublishedDate()}"></span></p>
+                                                                 th:text="${book.getPublishedDate()}"></span></p>
                         <div class="symbol-links100">
-                            <a th:href="@{/user/{id}/home/borrow_book/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span class="icon-lnr-100 lnr lnr-plus-circle"></span></a>
+                            <a th:href="@{/user/{id}/home/borrow_book/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}">
+                                <span class="icon-lnr-200 lnr lnr-plus-circle"></span></a>
                         </div>
                         <br>
                         <hr>

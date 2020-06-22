@@ -70,7 +70,7 @@
             <div th:if="${!reservedList.isEmpty()}">
                 <table class="table table-striped table-primary">
                     <thead class="ttop">
-                    <tr class="table-info">
+                    <tr class="table-info100">
                         <td> Id</td>
                         <td> Book Id</td>
                         <td> Book Title</td>
@@ -87,13 +87,13 @@
                         <td th:text="${res.getBook().getId()}" ></td>
                         <td th:text="${res.getBook().getTitle()}" ></td>
                         <td th:text="${res.getBook().listAuthors()}" ></td>
-                        <td th:text="${book.getUser().getEmail()}" ></td>
-                        <td th:text="${book.getUser().getName() + ' ' + book.getUser().getSurname()}" ></td>
+                        <td th:text="${res.getUser().getEmail()}" ></td>
+                        <td th:text="${res.getUser().getName() + ' ' + res.getUser().getSurname()}" ></td>
                         <td th:text="${res.displayDueDate()}" ></td>
                         <td>
                             <div class="symbol-links100">
-                                <a th:href="@{/user/{id}/manage_reservations/reject/{reserved_id}(id = ${currentUser.getId()}, reserved_id = ${res.getId()})}"><span class="icon-lnr-100-red lnr lnr-cross"></span></a>
-                                <a th:href="@{/user/{id}/manage_reservations/accept/{reserved_id}(id = ${currentUser.getId()}, reserved_id = ${res.getId()})}"><span class="icon-lnr-100-green lnr lnr-chevron-down"></span></a>
+                                <a th:href="@{/user/{id}/manage_books/reservations/reject/{reserved_id}(id = ${currentUser.getId()}, reserved_id = ${res.getId()})}"><span class="icon-lnr-100-red lnr lnr-cross"></span></a>
+                                <a th:href="@{/user/{id}/manage_books/reservations/accept/{reserved_id}(id = ${currentUser.getId()}, reserved_id = ${res.getId()})}"><span class="icon-lnr-100-green lnr lnr-chevron-down"></span></a>
                             </div>
                         </td>
                     </tr>

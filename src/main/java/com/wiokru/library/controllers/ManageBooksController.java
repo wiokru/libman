@@ -162,10 +162,24 @@ public class ManageBooksController {
                                            @RequestParam("selected_category") List<Long> categoriesIds) {
         User currentUser = userRepository.findById(id).get();
         Book newBook = setupNewBook(title, description, publisher, publishedDate, pageCount, authorsIds, categoriesIds);
-        bookRepository.save(newBook);
 
-        LOGGER.setLevel(Level.INFO);
-        LOGGER.info(Const.BOOK_ADDED_LOG);
+        try {
+            bookRepository.save(newBook);
+
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(Const.BOOK_ADDED_LOG);
+        }
+        catch (Exception e){
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(Const.SAVING_BOOK_ERROR_LOG);
+
+            ModelAndView modelAndView = new ModelAndView("add_book_form");
+            modelAndView.addObject("authorsList", authorRepository.findAll());
+            modelAndView.addObject("categoriesList", categoryRepository.findAll());
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("message", Const.SAVING_BOOK_ERROR_LOG);
+            return modelAndView;
+        }
 
         return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }

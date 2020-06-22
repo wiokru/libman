@@ -19,6 +19,8 @@
 
 <!--/*@thymesVar id="currentUser" type="com.wiokru.library.entity.User"*/-->
 <!--/*@thymesVar id="selectedBook" type="com.wiokru.library.entity.Book"*/-->
+<!--/*@thymesVar id="failed" type="java.lang.Boolean"*/-->
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
 
 
 <div class="limiter">
@@ -44,6 +46,13 @@
         </div>
 
         <div class="wrap-login300 p-l-50 p-r-50 p-t-55 p-b-30">
+
+            <div th:if="${failed}">
+                <div class="m-l-4 p-t-4">
+                    <label class="error-message" th:text="${message}"></label>
+                </div>
+            </div>
+
             <form class="login100-form" th:method="POST">
                 <span class="login100-form-title p-b-20">
                         Are you sure you want to reserve this book?

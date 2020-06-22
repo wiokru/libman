@@ -42,7 +42,7 @@ public class Borrowed implements Serializable {
         this.book = book;
         this.user = user;
         this.dated = new Timestamp(new Date().getTime());
-        this.dueDate = LocalDate.now().plusDays(Const.RESERVED_VALID_DAYS);
+        this.dueDate = LocalDate.now().plusDays(Const.BORROWED_VALID_DAYS);
     }
 
     public String displayDueDate() {

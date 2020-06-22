@@ -21,6 +21,7 @@
 <!--/*@thymesVar id="selectedUser" type="com.wiokru.library.entity.User"*/-->
 <!--/*@thymesVar id="is_success" type="java.lang.Boolean"*/-->
 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+<!--/*@thymesVar id="rolesList" type="java.util.List"*/-->
 
 
 <div class="limiter">
@@ -40,15 +41,16 @@
                         class="icon fa fa-book fa-2x"></i></a>
             </div>
             <div th:if="${currentUser.isLibrarian()}">
-                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
-                        class="icon fa fa-book fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books
+                    <i
+                            class="icon fa fa-book fa-2x"></i></a>
             </div>
         </div>
 
         <div class="wrap-login300 p-l-50 p-r-50 p-t-55 p-b-30">
             <form class="login100-form validate-form" th:method="POST">
             <span class="login100-form-title p-b-20">
-                    Your data
+                    Edit user
             </span>
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Invalid email">
@@ -85,6 +87,29 @@
                     <span class="symbol-input100">
                             <span class="lnr lnr-phone"></span>
                     </span>
+                </div>
+
+                <div class="wrap-input m-b-16">
+                    <table border="1">
+                        <thead class="ttop">
+                        <tr class="table-info100">
+                            <td colspan="2"> SELECT ROLES</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="role : ${rolesList}">
+                            <tr>
+                                <td th:text="${role.getName()}"></td>
+                                <th:block>
+                                    <td class="p-l-5 p-r-5 p-t-2 p-b-2"><input type="checkbox" id="selected_author"
+                                                                               name="selected_roles"
+                                                                               th:checked="${selectedUser.getRoles().contains(role)}"
+                                                                               th:value="${role.getId()}"/></td>
+                                </th:block>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
                 </div>
 
 

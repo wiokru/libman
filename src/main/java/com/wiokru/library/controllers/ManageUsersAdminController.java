@@ -2,10 +2,7 @@ package com.wiokru.library.controllers;
 
 import com.wiokru.library.entity.Book;
 import com.wiokru.library.entity.User;
-import com.wiokru.library.repositories.BookRepository;
-import com.wiokru.library.repositories.BorrowedRepository;
-import com.wiokru.library.repositories.ReservedRepository;
-import com.wiokru.library.repositories.UserRepository;
+import com.wiokru.library.repositories.*;
 import com.wiokru.library.utils.Const;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +23,7 @@ public class ManageUsersAdminController {
     private UserRepository userRepository;
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private BorrowedRepository borrowedRepository;
-
-    @Autowired
-    private ReservedRepository reservedRepository;
+    private RoleRepository roleRepository;
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -98,6 +89,7 @@ public class ManageUsersAdminController {
         ModelAndView modelAndView = new ModelAndView("user_edit_form");
         modelAndView.addObject("selectedUser", user);
         modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("rolesList", roleRepository.findAll());
         return modelAndView;
     }
 
@@ -108,7 +100,8 @@ public class ManageUsersAdminController {
                                      @ModelAttribute("surname") String surname,
                                      @ModelAttribute("email") String email,
                                      @ModelAttribute("city") String city,
-                                     @ModelAttribute("phone") String phone) {
+                                     @ModelAttribute("phone") String phone,
+                                     @RequestParam("selected_roles") List<Long> roles) {
         User currentUser = userRepository.findById(id).get();
         User user = userRepository.findById(userId).get();
 
@@ -118,6 +111,10 @@ public class ManageUsersAdminController {
             user.setEmail(email);
             user.setCity(city);
             user.setPhone(phone);
+            user.setRoles(null);
+             for(Long roleId : roles){
+                 user.addRole(roleRepository.findById(roleId).get());
+             }
 
             userRepository.save(user);
 

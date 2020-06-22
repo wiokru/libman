@@ -38,8 +38,9 @@
                         class="icon fa fa-book fa-2x"></i></a>
             </div>
             <div th:if="${currentUser.isLibrarian()}">
-                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
-                        class="icon fa fa-book fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books
+                    <i
+                            class="icon fa fa-book fa-2x"></i></a>
             </div>
         </div>
 
@@ -58,7 +59,7 @@
                 </div>
                 <div class="wrap-input100 m-b-16">
                     <textarea class="input200" th:name="description" rows="5" cols="20" role="textbox"
-                              placeholder="Description" ></textarea>
+                              placeholder="Description"></textarea>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                             <span class="lnr lnr-pencil"></span>
@@ -66,7 +67,7 @@
                 </div>
 
                 <div class="wrap-input100 m-b-16">
-                    <input class="input300"  type="text" th:name="publisher"
+                    <input class="input300" type="text" th:name="publisher"
                            placeholder="Publisher">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
@@ -75,7 +76,7 @@
                 </div>
 
                 <div class="wrap-input100 m-b-16">
-                    <input class="input300"  type="number" th:name="published_date"
+                    <input class="input300" type="number" th:name="published_date"
                            placeholder="Published Date">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
@@ -85,39 +86,59 @@
 
                 <div class="wrap-input100 m-b-16">
                     <input class="input300" type="number" th:name="page_count"
-                        placeholder="Pages Count">
+                           placeholder="Pages Count">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                             <span class="lnr lnr-file-empty"></span>
                         </span>
                 </div>
 
-                <table border="1">
-                    <th:block th:each="author : ${authorsList}">
-                        <tr>
-                            <td th:text="${author.getName()}"></td>
-                            <th:block>
-                                <td><input type="checkbox" id="selected_author" name="selected_author" th:value="${author.getId()}" /></td>
-                            </th:block>
-
+                <div class="wrap-input m-b-16">
+                    <table border="1">
+                        <thead class="ttop">
+                        <tr class="table-info100">
+                            <td colspan="2"> SELECT AUTHORS</td>
                         </tr>
-                    </th:block>
-                </table>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="author : ${authorsList}">
+                            <tr>
+                                <td th:text="${author.getName()}"></td>
+                                <th:block>
+                                    <td class="p-l-5 p-r-5 p-t-2 p-b-2"><input type="checkbox" id="selected_author"
+                                                                               name="selected_author"
+                                                                               th:value="${author.getId()}"/></td>
+                                </th:block>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
 
-                <table border="1">
-                    <th:block th:each="category : ${categoriesList}">
-                        <tr>
-                            <td th:text="${category.getName()}"></td>
-                            <th:block>
-                                <td><input type="checkbox" id="selected_category" name="selected_category" th:value="${category.getId()}" /></td>
-                            </th:block>
-
+                <div class="wrap-input m-b-16">
+                    <table border="1" class="p-t-15">
+                        <thead class="ttop">
+                        <tr class="table-info100">
+                            <td colspan="2"> SELECT CATEGORIES</td>
                         </tr>
-                    </th:block>
-                </table>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="category : ${categoriesList}">
+                            <tr>
+                                <td th:text="${category.getName()}"></td>
+                                <th:block>
+                                    <td class="p-l-5 p-r-5 p-t-2 p-b-2"><input type="checkbox" id="selected_category"
+                                                                               name="selected_category"
+                                                                               th:value="${category.getId()}"/></td>
+                                </th:block>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
 
 
-                    <div class="m-l-4 p-t-4">
+                <div class="m-l-4 p-t-4">
                     <!--/*@thymesVar id="error_message" type="java.lang.String"*/-->
                     <label class="error-message" th:text="${error_message}"></label>
                 </div>
@@ -125,23 +146,23 @@
                 <div class="container-login100-form-btn p-t-25">
                     <div class="button-wrap-container">
                         <button type="submit" class="login100-form-btn">
-                            ADD AUTHORS
+                            SAVE
                         </button>
                     </div>
                 </div>
 
-<!--                <div class="container-login100-form-btn p-t-25">-->
-<!--                    <div class="button-wrap-container">-->
-<!--                        <button type="submit" class="login100-form-btn">-->
-<!--                            Save-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                    <div class="button-wrap-container">-->
-<!--                        <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" class="login100-form-btn">-->
-<!--                            Cancel-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="container-login100-form-btn p-t-25">-->
+                <!--                    <div class="button-wrap-container">-->
+                <!--                        <button type="submit" class="login100-form-btn">-->
+                <!--                            Save-->
+                <!--                        </button>-->
+                <!--                    </div>-->
+                <!--                    <div class="button-wrap-container">-->
+                <!--                        <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" class="login100-form-btn">-->
+                <!--                            Cancel-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </form>
         </div>
     </div>

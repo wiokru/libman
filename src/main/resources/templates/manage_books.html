@@ -38,8 +38,9 @@
                         class="icon fa fa-book fa-2x"></i></a>
             </div>
             <div th:if="${currentUser.isLibrarian()}">
-                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books <i
-                        class="icon fa fa-book fa-2x"></i></a>
+                <a th:href="@{/user/{id}/manage_books(id = ${currentUser.getId()})}" id="manage_books_librarian"> Books
+                    <i
+                            class="icon fa fa-book fa-2x"></i></a>
             </div>
         </div>
 
@@ -49,17 +50,24 @@
             </span>
 
             <div class="container-login100-form-btn p-t-25 p-b-35">
-                <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/add_book(id = ${currentUser.getId()})}">
-                    ADD NEW BOOK
-                </a>
-
-                <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/reservations(id = ${currentUser.getId()})}">
-                    MANAGE RESERVATIONS
-                </a>
-
-                <a class="login100-form-btn" th:href="@{/user/{id}/manage_books/borrowed(id = ${currentUser.getId()})}">
-                    MANAGE BORROWED
-                </a>
+                <div class="search-button-container">
+                    <a class="login100-form-btn"
+                       th:href="@{/user/{id}/manage_books/add_book(id = ${currentUser.getId()})}">
+                        ADD NEW BOOK
+                    </a>
+                </div>
+                <div class="search-button-container">
+                    <a class="login100-form-btn"
+                       th:href="@{/user/{id}/manage_books/reservations(id = ${currentUser.getId()})}">
+                        MANAGE RESERVATIONS
+                    </a>
+                </div>
+                <div class="search-button-container">
+                    <a class="login100-form-btn"
+                       th:href="@{/user/{id}/manage_books/borrowed(id = ${currentUser.getId()})}">
+                        MANAGE BORROWED
+                    </a>
+                </div>
             </div>
 
             <div class="container-login100-form-btn p-t-25">
@@ -82,9 +90,9 @@
             </div>
 
             <div th:if="${!bookList.isEmpty()}">
-                <table class="table table-striped table-primary">
+                <table class="table table-striped">
                     <thead class="ttop">
-                    <tr class="table-info">
+                    <tr class="table-info100">
                         <td> Id</td>
                         <td> Title</td>
                         <td> Authors</td>
@@ -96,16 +104,19 @@
                     </thead>
                     <tbody>
                     <tr th:each="book :${bookList}">
-                        <td th:text="${book.getId()}" ></td>
-                        <td th:text="${book.getTitle()}" ></td>
-                        <td th:text="${book.listAuthors()}" ></td>
-                        <td th:text="${book.getPublisher()}" ></td>
-                        <td th:text="${book.getPublishedDate()}" ></td>
-                        <td th:text="${book.getPageCount()}" ></td>
+                        <td th:text="${book.getId()}"></td>
+                        <td th:text="${book.getTitle()}"></td>
+                        <td th:text="${book.listAuthors()}"></td>
+                        <td th:text="${book.getPublisher()}"></td>
+                        <td th:text="${book.getPublishedDate()}"></td>
+                        <td th:text="${book.getPageCount()}"></td>
                         <td>
                             <div class="symbol-links100">
-                                <a th:method="POST" th:href="@{/user/{id}/manage_books/delete/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span class="icon-lnr-100 lnr lnr-trash"></span></a>
-                                <a th:href="@{/user/{id}/manage_books/edit/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span class="icon-lnr-100 lnr lnr-pencil"></span></a>
+                                <a th:method="POST"
+                                   th:href="@{/user/{id}/manage_books/delete/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span
+                                        class="icon-lnr-100 lnr lnr-trash"></span></a>
+                                <a th:href="@{/user/{id}/manage_books/edit/{book_id}(id = ${currentUser.getId()}, book_id = ${book.getId()})}"><span
+                                        class="icon-lnr-100 lnr lnr-pencil"></span></a>
                             </div>
                         </td>
                     </tr>

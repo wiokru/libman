@@ -213,10 +213,13 @@ iframe {
 }
 
 .wrap-login200 {
-    width: 900px;
+    width: 750px;
     background: #fff;
     border-radius: 3px;
     overflow: hidden;
+    display: inline-block;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 
 .wrap-login300 {
@@ -254,6 +257,11 @@ iframe {
 
 
 /*---------------------------------------------*/
+.wrap-input {
+    position: relative;
+    display: inline-block;
+}
+
 .wrap-input100 {
     position: relative;
     width: 100%;
@@ -396,6 +404,11 @@ iframe {
 .input100:focus + .focus-input100 + .symbol-input100 {
     color: #d33f8d;
     padding-left: 18px;
+}
+
+.table-info100{
+    background-color: #d33f8d;
+    color: #e6e6e6;
 }
 
 /*==================================================================
@@ -589,6 +602,7 @@ iframe {
     color: #c80000;
     width: 100%;
     display: block;
+    font-size: 20px;
 }
 
 .info-message {
@@ -624,6 +638,11 @@ hr {
     font-size: 24px;
 }
 
+.icon-lnr-200 {
+    padding: 5px 10px 2px;
+    font-size: 34px;
+}
+
 .icon-lnr-100-green {
     padding: 5px 10px 2px;
     font-size: 24px;
@@ -640,6 +659,13 @@ hr {
     font-weight: bold;
     font-size: 16px;
     color: #d33f8d;
+}
+
+.book-reservation {
+    font-family: Poppins-Regular;
+    font-weight: bold;
+    font-size: 16px;
+    /*color: #d33f8d;*/
 }
 
 .book-author {

@@ -18,6 +18,7 @@
 <body>
 
 <!--/*@thymesVar id="borrowedList" type="java.util.List"*/-->
+<!--/*@thymesVar id="reservedList" type="java.util.List"*/-->
 <!--/*@thymesVar id="currentUser" type="com.wiokru.library.entity.User"*/-->
 
 
@@ -43,8 +44,7 @@
             </div>
         </div>
 
-
-        <div class="wrap-login300 p-l-50 p-r-50 p-t-55 p-b-30">
+        <div class="wrap-login200 p-l-50 p-r-50 p-t-55 p-b-30">
             <span class="login100-form-title p-b-20">
                     Your borrowed books.
             </span>
@@ -66,6 +66,30 @@
                 </label>
             </div>
         </div>
+
+        <div class="wrap-login200 p-l-50 p-r-50 p-t-55 p-b-30">
+            <span class="login100-form-title p-b-20">
+                    Your reserved books.
+            </span>
+
+            <div th:if="${!reservedList.isEmpty()}">
+                <ul th:object="${reservedList}" id="userResTable" border="1">
+                    <li th:each="reserved :${reservedList}">
+                        <p class="book-title" th:text="${reserved.getBook().getTitle()}"></p>
+                        <p class="book-author" th:text="${reserved.getBook().listAuthors()}"></p>
+                        <p class="lnr lnr-calendar-full">  <span class="post-creation-date" th:text="${reserved.displayDueDate()}"></span></p>
+                        <br>
+                        <hr>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${reservedList.isEmpty()}">
+                <label class="login100-form-label p-b-35 p-l-2 p-r-2">
+                    You have no reserved books yet.
+                </label>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>

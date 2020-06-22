@@ -42,19 +42,19 @@
     background-color: #555 /* Light Black */
 }
 
-#manage_users_admin {
-    top: 340px;
-    background-color: #f4eb36 /* Yellow */
-}
-
 #manage_book_admin {
-    top: 420px;
+    top: 340px;
     background-color: #f4eb36 /* Yellow */
 }
 
 #manage_books_librarian{
     top: 340px;
-    background-color: #f4eb36 /* Yellow */
+    background-color: #f4db36 /* Yellow */
+}
+
+#manage_users_admin {
+    top: 420px;
+    background-color: #7300b6 /* Purple */
 }
 
 .icon {
