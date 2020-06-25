@@ -56,4 +56,17 @@ public class CategoriesController {
 
         return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
+
+    @DeleteMapping("/user/{id}/manage_books/delete_category/{category_id}")
+    public ModelAndView deleteUser(@PathVariable("id") Long id,
+                                   @PathVariable("category_id") Long categoryId) {
+        User currentUser = userRepository.findById(id).get();
+        BookCategory category = categoryRepository.findById(categoryId).get();
+        categoryRepository.delete(category);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.CATEGORY_DELETED_LOG);
+
+        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+    }
 }

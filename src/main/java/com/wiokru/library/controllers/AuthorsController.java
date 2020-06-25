@@ -55,4 +55,17 @@ public class AuthorsController {
 
         return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
+
+    @DeleteMapping("/user/{id}/manage_books/delete_author/{author_id}")
+    public ModelAndView deleteUser(@PathVariable("id") Long id,
+                                   @PathVariable("author_id") Long authorId) {
+        User currentUser = userRepository.findById(id).get();
+        Author author = authorRepository.findById(authorId).get();
+        authorRepository.delete(author);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.AUTHOR_DELETED_LOG);
+
+        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+    }
 }
