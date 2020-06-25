@@ -33,6 +33,12 @@ Administrator has the same permissions as librarian and user. He also has abilit
 
 ![alt text](https://github.com/wiokru/libman/blob/master/images/admin_view.png)
 
+**Books**
+List of books can be filtered by author, title or publisher (both on main books list on home page and "Manage Books" tab)
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/search_example.png)
+
+
 ## What was used and how to run
 1. Java 11
 2. Maven 3.6.3
@@ -80,7 +86,34 @@ After running the app you will see the login page.
 From there you can register a new account - click on "Sign up now" and you will see sign up page
 ![alt text](https://github.com/wiokru/libman/blob/master/images/signup.png)
 
+## Screenshots from app
+1. Adding new book 
 
+![alt text](https://github.com/wiokru/libman/blob/master/images/add_book.png)
+
+2. "My Books" tab
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/admin_my_books.png)
+
+3. Edit user
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/edit_user.png)
+
+4. "Manage books" tab
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/manage_books.png)
+
+5. "Manage borrowed"
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/manage_borrowed.png)
+
+6. "Manage reservations"
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/manage_reservations.png)
+
+7. "Manage users" tab
+
+![alt text](https://github.com/wiokru/libman/blob/master/images/manage_users.png)
 ## Use case diagram
 There are use cases for each role. Please keep in mind that permissions are inherited (as described erlier), so even tho there is no use case diagram for book reservation by admin he still can do this, cause he is also a user.
 ![alt text](https://github.com/wiokru/libman/blob/master/images/usecase1.jpg)
