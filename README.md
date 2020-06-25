@@ -16,7 +16,7 @@ User can reserve max.3 books. If he wants more he should borrow the ones that ar
 User also can view his borrowed and reserved books - tab "My books".  
 User can edit his information, for example change phone number, city, etc.
 
-![alt text](https://github.com/wiokru/libman/tree/master/images/user_view.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/user_view.png)
 
 **Librarian**
 
@@ -24,14 +24,14 @@ Librarian can do the same things as user, but moreover he has "Manage Books" tab
 It allows him to add new book, add new author, add new book category, mark books as borrowed (accept reservations), reject reservations and mark books as returned.
 He also can edit and delete existing books.
 
-![alt text](https://github.com/wiokru/libman/tree/master/images/librarian_view.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/librarian_view.png)
 
 
 **Administrator**
 
 Administrator has the same permissions as librarian and user. He also has ability to delete and edit exising users. For example he can add new roles to users.
 
-![alt text](https://github.com/wiokru/libman/tree/master/images/admin_view.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/admin_view.png)
 
 ## What was used and how to run
 1. Java 11
@@ -75,8 +75,8 @@ You can also run the app directly from the IDE you're using.
 The app will start running at http://localhost:8080.
 
 After running the app you will see the login page.
-![alt text](https://github.com/wiokru/libman/tree/master/images/login.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/login.png)
 
 From there you can register a new account - click on "Sign up now" and you will see sign up page
-![alt text](https://github.com/wiokru/libman/tree/master/images/signup.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/signup.png)
 
