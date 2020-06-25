@@ -12,7 +12,7 @@
 	<artifactId>library</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>library</name>
-	<description>Managing book llibrary</description>
+	<description>Managing book library</description>
 
 	<properties>
 		<java.version>11</java.version>
