@@ -83,5 +83,5 @@ From there you can register a new account - click on "Sign up now" and you will 
 
 ## Use case diagram
 There are use cases for each role. Please keep in mind that permissions are inherited (as described erlier), so even tho there is no use case diagram for book reservation by admin he still can do this, cause he is also a user.
-![alt text](https://github.com/wiokru/libman/blob/master/images/usecase1.png)
+![alt text](https://github.com/wiokru/libman/blob/master/images/usecase1.jpeg)
 
