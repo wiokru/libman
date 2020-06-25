@@ -42,15 +42,15 @@ Administrator has the same permissions as librarian and user. He also has abilit
 6. Hibernate
 6. Thymeleaf
 
-** Running project **
+**Running project**
 
 1. Clone the project
 ```
-https://github.com/wiokru/libman.git
+git clone https://github.com/wiokru/libman.git
 ```
 2. Create the database
 
-I used docker to create and run database. You can also use local postgreSQL server. 
+I used docker to create and run local database. You can also use local postgreSQL server. 
 To set up database on docker use following commands (make sure docker service is running).
 ```
 docker volume create pgdata
