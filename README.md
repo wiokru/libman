@@ -67,6 +67,17 @@ docker exec -i postgres psql -U postgres -c "CREATE DATABASE library_umcs WITH E
    Open `src/main/resources/application.properties` and change `spring.datasource.username`
    and `spring.datasource.password` for the ones you used. Check if `spring.datasource.url` matches your url.
    
+To run database use following commands:
+```
+docker start postgres
+
+# if you want to see database use following:
+docker exec -it postgres bash
+psql -U postgres
+# and from there use postgreSQL commands to select database
+```
+  
+  
 3. Build and run the app using maven
 ```
 mvn clean package
