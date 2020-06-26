@@ -33,4 +33,3 @@ Projekt powstał w jednoosobowej grupie.
 3. W aplikacji dodałam metodę, która uruchamia się co 24h i sprawdza, czy jakieś rezerwacje nie są
 "przeterminowane" (czy upłynął czas na ich odebranie). Jeśli takowe są to są usuwane, żeby książka nie była blokowana.
 (utils/ScheduledTask)
-4. Wykorzystanie Hibernate i dockera (lokalna baza)
