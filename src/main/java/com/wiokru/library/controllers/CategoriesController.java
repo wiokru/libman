@@ -71,7 +71,7 @@ public class CategoriesController {
     }
 
     @PutMapping("/user/{id}/manage_books/edit_category/{category_id")
-    public ModelAndView updateAuthor(@PathVariable("id") Long id,
+    public ModelAndView updateCategory(@PathVariable("id") Long id,
                                      @PathVariable("category_id") Long categoryId,
                                      @ModelAttribute("name") String name) {
         User currentUser = userRepository.findById(id).get();
@@ -80,7 +80,7 @@ public class CategoriesController {
         categoryRepository.save(category);
 
         LOGGER.setLevel(Level.INFO);
-        LOGGER.info(Const.AUTHOR_UPDATED_LOG);
+        LOGGER.info(Const.CATEGORY_UPDATED_LOG);
 
         return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }

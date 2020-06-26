@@ -1,6 +1,5 @@
 package com.wiokru.library.utils;
 
-import com.wiokru.library.entity.Roles;
 import com.wiokru.library.entity.User;
 
 public class UserBuilder {

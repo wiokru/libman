@@ -1,0 +1,35 @@
+Ocena, na którą aspiruję to 4.
+
+Spełnione wymagania:
+1. Spring Boot, Maven, git
+2. Kod jest dostępny w repozytorium
+3. Min. 10 endpointów - jest nawet więcej.
+   Min. 4 metody GET/POST/PUT/DELETE - również jest więcej, jedynie PUT-ów mam 4.
+4. Requesty do postmana - są. W folderze "postman" w repozytorium znajduje się
+   plik JSON z wyeksportowaną kolekcją reqestów. Wystarczy zaimportować do postmana.
+5. Min. 5 tabel - zgadza się. Mam tabele takie jak: book, author, bookcategory, borrowed, reserved, users, role.
+   Dodatkowo tabele połączone są relacjami - użytkownicy mają swoje role, książki - autorów i kategorie,
+   borrowed ma referencje do odpowiedniego użytkownika i książki, tak samo jak reserved.
+6. Repozytoria zapisujące/usuwające/pobierające obiekty z bazy danych.
+   Odwrócenie zależności - klient nie wie, jak działa funkcja, którą wywołuje z UI, za realizację funkcjonalności
+   odpowiadają komunikujące się między sobą klasy.
+7. Diagram UML przypadków użycia. Jest załączony do dokumentacji - w README w repo wyświetla się na dole.
+   Jest też możliwy do podejrzenia w folderze "images" w repozytorium. Jest tam plik usecase1.jpg
+   Funkcjonalności - dla większej czytelności - rozdzieliłam na pojedyncze diagramy. Napisałam w dokumentacji
+   (README, chwilę przed umieszczeniem diagramu), ale dopiszę też tu - nie tworzyłam osobnych diagramów dla tych samych
+   funkcjonalności wykonywanych przez użytkowników o różnych rolach. Wynika to z faktu, że role są "dziedziczone", czyli
+   bibliotekarz jest też użytkownikiem, a administrator - poza swoimi przywilejami - ma również przywileje bibliotekarza.
+8. Dokumentacja, jak już wspominałam, to README w repozytorium. Znajduje się w niej opis projektu, zastosowanie,
+   wykorzystane narzędzia, kolejne kroki do uruchomienia aplikacji, zrzuty ekranu z aplikacji, diagram przypadków użycia
+   oraz informacja o requestach do postmana.
+
+Dodatkowe elementy
+1. Front-end napisany w Thymeleaf (jest on oparty na silniku html, więc metody PUT i DELETE nie są obsługiwane domyślnie
+przez front-end. Aby to obejść część metod jest oznaczona innym mappingiem, gdyż "standardowe" obejście u mnie nie działało.
+Niemniej jednak funkcjonalności wykorzystujące poprawne mapowanie metod są i w postmanie korzystam właśnie z nich.
+Obejście dotyczy tylko front-endu.)
+2. Korzystam z wzorca Builder do tworzenia userów, aczkolwiek nie sądzę, żeby logika aplikacji była jakoś bardzo złożona.
+Projekt powstał w jednoosobowej grupie.
+3. W aplikacji dodałam metodę, która uruchamia się co 24h i sprawdza, czy jakieś rezerwacje nie są
+"przeterminowane" (czy upłynął czas na ich odebranie). Jeśli takowe są to są usuwane, żeby książka nie była blokowana.
+(utils/ScheduledTask)
