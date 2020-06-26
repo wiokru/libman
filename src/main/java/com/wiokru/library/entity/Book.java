@@ -48,10 +48,6 @@ public class Book implements Serializable {
     @OneToOne(mappedBy = "book", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Reserved reserved;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "isbn_id")
-    private ISBN isbn;
-
     public Book(String title, String publisher, String publishedDate, String description, Integer pageCount) {
         this.title = title;
         this.publisher = publisher;
