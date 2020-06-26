@@ -55,7 +55,7 @@ public class ManageReservationsController {
     public ModelAndView searchReservations(@PathVariable("id") Long id,
                                     @ModelAttribute("search_text") String search_text) {
 
-        ModelAndView modelAndView = new ModelAndView("manage_books");
+        ModelAndView modelAndView = new ModelAndView("manage_reservations");
         Optional<User> currentUser = userRepository.findById(id);
 
         List<Reserved> reservations = reservedRepository.findAll().stream()
@@ -103,8 +103,25 @@ public class ManageReservationsController {
         return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books/reservations");
     }
 
-    @GetMapping("/user/{id}/manage_books/reservations/accept/{reserved_id}")
+    @PostMapping("/user/{id}/manage_books/reservations/accept/{reserved_id}")
     public ModelAndView acceptReserved(@PathVariable("id") Long id,
+                                       @PathVariable("reserved_id") Long reserved_id) {
+        User currentUser = userRepository.findById(id).get();
+        Reserved reserved = reservedRepository.findById(reserved_id).get();
+
+        Borrowed borrowed = new Borrowed(reserved.getBook(), reserved.getUser());
+
+        reservedRepository.delete(reserved);
+        borrowedRepository.save(borrowed);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.RESERVATION_ACCEPTED_LOG);
+
+        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books/reservations");
+    }
+
+    @GetMapping("/user/{id}/manage_books/reservations/accept/{reserved_id}")
+    public ModelAndView acceptReservedForThymeleaf(@PathVariable("id") Long id,
                                        @PathVariable("reserved_id") Long reserved_id) {
         User currentUser = userRepository.findById(id).get();
         Reserved reserved = reservedRepository.findById(reserved_id).get();

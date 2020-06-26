@@ -120,9 +120,8 @@ There are use cases for each role. Please keep in mind that permissions are inhe
 
 ## Postman requests
 
-In this repo there is a json file with sample postman request to test app functionalities. 
-There are 4 tests for each HTTP method - GET/POST/DELETE/PUT.
-However, in app there is a lot more of them - can be seen on UI. 
+In this repo there is a json file with sample postman requests to test app functionalities. 
+There are test requests for each HTTP method - GET/POST/DELETE/PUT. 
 
 [POSTMAN REQUESTS](https://github.com/wiokru/libman/blob/master/postman/LibMan.postman_collection.json)
 
