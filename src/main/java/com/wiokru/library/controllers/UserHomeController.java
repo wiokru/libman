@@ -89,7 +89,6 @@ public class UserHomeController {
         return modelAndView;
     }
 
-    @PostMapping("/user/{id}/my_info")
     @PutMapping("/user/{id}/my_info")
     public ModelAndView saveEditUserInfo(@PathVariable("id") Long id,
                                          @ModelAttribute("name") String name,
@@ -97,6 +96,43 @@ public class UserHomeController {
                                          @ModelAttribute("email") String email,
                                          @ModelAttribute("city") String city,
                                          @ModelAttribute("phone") String phone) {
+        User currentUser = userRepository.findById(id).get();
+        try {
+            currentUser.setName(name);
+            currentUser.setSurname(surname);
+            currentUser.setEmail(email);
+            currentUser.setCity(city);
+            currentUser.setPhone(phone);
+
+            userRepository.save(currentUser);
+
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(email + Const.USER_UPDATED_SUCCESS_LOG);
+
+            ModelAndView modelAndView = new ModelAndView("user_info");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("is_success", Boolean.TRUE);
+            modelAndView.addObject("message", Const.USER_UPDATED_SUCCESS);
+            return modelAndView;
+        } catch (Exception e) {
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(email + Const.USER_UPDATED_ERROR_LOG + e.getMessage());
+
+            ModelAndView modelAndView = new ModelAndView("user_info");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("is_success", Boolean.FALSE);
+            modelAndView.addObject("message", Const.USER_UPDATED_ERROR + e.getMessage());
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/user/{id}/my_info")
+    public ModelAndView saveEditUserInfoForThymeleaf(@PathVariable("id") Long id,
+                                                     @ModelAttribute("name") String name,
+                                                     @ModelAttribute("surname") String surname,
+                                                     @ModelAttribute("email") String email,
+                                                     @ModelAttribute("city") String city,
+                                                     @ModelAttribute("phone") String phone) {
         User currentUser = userRepository.findById(id).get();
         try {
             currentUser.setName(name);

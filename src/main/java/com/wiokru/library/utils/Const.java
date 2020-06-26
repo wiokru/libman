@@ -36,7 +36,9 @@ public class Const {
     public static final String ALL_BORROWED_SIZE = "All borrowed books list size: ";
     public static final String ALL_USERS_SIZE = "All users list size: ";
     public static final String AUTHOR_DELETED_LOG = "Author deleted succesfully";
+    public static final String AUTHOR_UPDATED_LOG = "Author deleted succesfully";
     public static final String CATEGORY_DELETED_LOG = "Book category deleted succesfully";
+    public static final String CATEGORY_UPDATED_LOG = "Book category deleted succesfully";
 
     public static final int RESERVED_VALID_DAYS = 5;
     public static final int BORROWED_VALID_DAYS = 30;

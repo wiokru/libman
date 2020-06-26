@@ -68,6 +68,18 @@ public class ManageUsersAdminController {
     }
 
     @GetMapping("/user/{id}/manage_users/delete/{user_id}")
+    public ModelAndView deleteUserForThymeleaf(@PathVariable("id") Long id,
+                                   @PathVariable("user_id") Long userId) {
+        User currentUser = userRepository.findById(id).get();
+        User user = userRepository.findById(userId).get();
+        userRepository.delete(user);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.USER_DELETED_LOG);
+
+        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_users");
+    }
+
     @DeleteMapping("/user/{id}/manage_users/delete/{user_id}")
     public ModelAndView deleteUser(@PathVariable("id") Long id,
                                    @PathVariable("user_id") Long userId) {
@@ -94,7 +106,6 @@ public class ManageUsersAdminController {
         return modelAndView;
     }
 
-    @PostMapping("/user/{id}/manage_users/edit/{user_id}")
     @PutMapping("/user/{id}/manage_users/edit/{user_id}")
     public ModelAndView saveEditUser(@PathVariable("id") Long id,
                                      @PathVariable("user_id") Long userId,
@@ -114,9 +125,59 @@ public class ManageUsersAdminController {
             user.setCity(city);
             user.setPhone(phone);
             user.setRoles(null);
-             for(Long roleId : roles){
-                 user.addRole(roleRepository.findById(roleId).get());
-             }
+            for(Long roleId : roles){
+                user.addRole(roleRepository.findById(roleId).get());
+            }
+
+            userRepository.save(user);
+
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(email + Const.USER_UPDATED_SUCCESS_LOG);
+
+            ModelAndView modelAndView = new ModelAndView("user_edit_form");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("selectedUser", user);
+            modelAndView.addObject("rolesList", roleRepository.findAll());
+            modelAndView.addObject("is_success", Boolean.TRUE);
+            modelAndView.addObject("message", Const.USER_UPDATED_SUCCESS);
+            return modelAndView;
+        }
+        catch (Exception e) {
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(email + Const.USER_UPDATED_ERROR_LOG + e.getMessage());
+
+            ModelAndView modelAndView = new ModelAndView("user_edit_form");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("selectedUser", user);
+            modelAndView.addObject("rolesList", roleRepository.findAll());
+            modelAndView.addObject("is_success", Boolean.FALSE);
+            modelAndView.addObject("message", Const.USER_UPDATED_ERROR + e.getMessage());
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/user/{id}/manage_users/edit/{user_id}")
+    public ModelAndView saveEditUserForThymeleaf(@PathVariable("id") Long id,
+                                     @PathVariable("user_id") Long userId,
+                                     @ModelAttribute("name") String name,
+                                     @ModelAttribute("surname") String surname,
+                                     @ModelAttribute("email") String email,
+                                     @ModelAttribute("city") String city,
+                                     @ModelAttribute("phone") String phone,
+                                     @RequestParam("selected_roles") List<Long> roles) {
+        User currentUser = userRepository.findById(id).get();
+        User user = userRepository.findById(userId).get();
+
+        try {
+            user.setName(name);
+            user.setSurname(surname);
+            user.setEmail(email);
+            user.setCity(city);
+            user.setPhone(phone);
+            user.setRoles(null);
+            for(Long roleId : roles){
+                user.addRole(roleRepository.findById(roleId).get());
+            }
 
             userRepository.save(user);
 

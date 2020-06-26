@@ -72,6 +72,18 @@ public class ManageBooksController {
     }
 
     @GetMapping("/user/{id}/manage_books/delete/{book_id}")
+    public ModelAndView deleteBookForThymeleaf(@PathVariable("id") Long id,
+                                   @PathVariable("book_id") Long book_id) {
+        User currentUser = userRepository.findById(id).get();
+        Book book = bookRepository.findById(book_id).get();
+        bookRepository.delete(book);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.BOOK_DELETED_LOG);
+
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
+    }
+
     @DeleteMapping("/user/{id}/manage_books/delete/{book_id}")
     public ModelAndView deleteBook(@PathVariable("id") Long id,
                                    @PathVariable("book_id") Long book_id) {
@@ -97,9 +109,50 @@ public class ManageBooksController {
         return modelAndView;
     }
 
-    @PostMapping("/user/{id}/manage_books/edit/{book_id}")
     @PutMapping("/user/{id}/manage_books/edit/{book_id}")
     public ModelAndView saveEditBook(@PathVariable("id") Long id,
+                                     @PathVariable("book_id") Long book_id,
+                                     @ModelAttribute("title") String title,
+                                     @ModelAttribute("description") String description,
+                                     @ModelAttribute("publisher") String publisher,
+                                     @ModelAttribute("published_date") String publishedDate,
+                                     @ModelAttribute("page_count") Integer pageCount) {
+        User currentUser = userRepository.findById(id).get();
+        Book book = bookRepository.findById(book_id).get();
+
+        try {
+            book.setTitle(title);
+            book.setDescription(description);
+            book.setPublisher(publisher);
+            book.setPublishedDate(publishedDate);
+            book.setPageCount(pageCount);
+
+            bookRepository.save(book);
+
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(book_id + Const.BOOK_UPDATED_SUCCESS_LOG);
+
+            ModelAndView modelAndView = new ModelAndView("book_edit_form");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("selectedBook", book);
+            modelAndView.addObject("is_success", Boolean.TRUE);
+            modelAndView.addObject("message", Const.BOOK_UPDATED_SUCCESS);
+            return modelAndView;
+        } catch (Exception e) {
+            LOGGER.setLevel(Level.INFO);
+            LOGGER.info(book_id + Const.BOOK_UPDATED_ERROR_LOG + e.getMessage());
+
+            ModelAndView modelAndView = new ModelAndView("book_edit_form");
+            modelAndView.addObject("currentUser", currentUser);
+            modelAndView.addObject("selectedBook", book);
+            modelAndView.addObject("is_success", Boolean.FALSE);
+            modelAndView.addObject("message", Const.BOOK_UPDATED_ERROR + e.getMessage());
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/user/{id}/manage_books/edit/{book_id}")
+    public ModelAndView saveEditBookForThymeleaf(@PathVariable("id") Long id,
                                      @PathVariable("book_id") Long book_id,
                                      @ModelAttribute("title") String title,
                                      @ModelAttribute("description") String description,

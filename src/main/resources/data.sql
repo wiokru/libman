@@ -64,6 +64,7 @@ INSERT INTO author (name) VALUES ('Matthias Rehahn');
 INSERT INTO author (name) VALUES ('Brigitte Voit');
 INSERT INTO author (name) VALUES ('Harald Cherdron');
 INSERT INTO author (name) VALUES ('Lonely Planet');
+INSERT INTO author (name) VALUES ('Jeremy Clarckson');
 
 INSERT INTO bookcategory (name) VALUES ('Fiction / Action & Adventure');
 INSERT INTO bookcategory (name) VALUES ('Fiction / Media Tie-In');
@@ -104,6 +105,7 @@ INSERT INTO bookcategory (name) VALUES ('Travel / Special Interest / Adventure')
 INSERT INTO bookcategory (name) VALUES ('Reference / General');
 INSERT INTO bookcategory (name) VALUES ('Travel / Food, Lodging & Transportation / General');
 INSERT INTO bookcategory (name) VALUES ('Humor / General');
+INSERT INTO bookcategory (name) VALUES ('Not used category');
 
 INSERT INTO book (title, publisher, published_date, isbn_id, page_count, description) VALUES ('The Last Jedi: Expanded Edition (Star Wars)','Random House Publishing Group','2018-03-06',1,336,'<b><i>NEW YORK TIMES </i>BESTSELLER • Written with input from director Rian Johnson, this official adaptation of <i>Star Wars: The Last Jedi </i>expands on the film to include scenes from alternate versions of the script and other additional content.</b><br> <b> </b><br> From the ashes of the Empire has arisen another threat to the galaxy’s freedom: the ruthless First Order. Fortunately, new heroes have emerged to take up arms—and perhaps lay down their lives—for the cause. Rey, the orphan strong in the Force; Finn, the ex-stormtrooper who stands against his former masters; and Poe Dameron, the fearless X-wing pilot, have been drawn together to fight side-by-side with General Leia Organa and the Resistance. But the First Order’s Supreme Leader Snoke and his merciless enforcer Kylo Ren are adversaries with superior numbers and devastating firepower at their command. Against this enemy, the champions of light may finally be facing their extinction. Their only hope rests with a lost legend: Jedi Master Luke Skywalker.<br>  <br> Where the action of <i>Star Wars: The Force Awakens</i> ended, <i>Star Wars: The Last Jedi </i>begins, as the battle between light and dark climbs to astonishing new heights.<br>  <br><b>Featuring thrilling photos from the hit movie</b>');
 INSERT INTO book (title, publisher, published_date, isbn_id, page_count, description) VALUES ('Star Wars','Ballantine Books','1986',2,224,'Luke Skywalker was a twenty-year-old who lived and worked on his uncle''s farm on the remote planet of Tatooine...and he was bored beyond belief. He yearned for adventures that would take him beyond the farthest galaxies. But he got much more than he bargained for....');

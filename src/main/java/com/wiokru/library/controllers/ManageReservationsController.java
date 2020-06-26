@@ -1,10 +1,8 @@
 package com.wiokru.library.controllers;
 
-import com.wiokru.library.entity.Book;
 import com.wiokru.library.entity.Borrowed;
 import com.wiokru.library.entity.Reserved;
 import com.wiokru.library.entity.User;
-import com.wiokru.library.repositories.BookRepository;
 import com.wiokru.library.repositories.BorrowedRepository;
 import com.wiokru.library.repositories.ReservedRepository;
 import com.wiokru.library.repositories.UserRepository;
@@ -78,6 +76,19 @@ public class ManageReservationsController {
     }
 
     @GetMapping("/user/{id}/manage_books/reservations/reject/{reserved_id}")
+    public ModelAndView rejectReservedForThymeleaf(@PathVariable("id") Long id,
+                                       @PathVariable("reserved_id") Long reserved_id) {
+        User currentUser = userRepository.findById(id).get();
+        Reserved reserved = reservedRepository.findById(reserved_id).get();
+
+        reservedRepository.delete(reserved);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.RESERVATION_REJECTED_LOG);
+
+        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books/reservations");
+    }
+
     @DeleteMapping("/user/{id}/manage_books/reservations/reject/{reserved_id}")
     public ModelAndView rejectReserved(@PathVariable("id") Long id,
                                        @PathVariable("reserved_id") Long reserved_id) {

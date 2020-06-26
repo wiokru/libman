@@ -24,7 +24,7 @@ public class CategoriesController {
 
 
     @GetMapping("user/{id}/manage_books/add_category")
-    public ModelAndView addBookForm(@PathVariable("id") Long id) {
+    public ModelAndView addCategoryForm(@PathVariable("id") Long id) {
         User currentUser = userRepository.findById(id).get();
 
         ModelAndView modelAndView = new ModelAndView("add_category_form");
@@ -33,7 +33,7 @@ public class CategoriesController {
     }
 
     @PostMapping("user/{id}/manage_books/add_category")
-    public ModelAndView addNewBook(@PathVariable("id") Long id,
+    public ModelAndView addNewCategory(@PathVariable("id") Long id,
                                    @ModelAttribute("name") String name) {
         User currentUser = userRepository.findById(id).get();
         BookCategory category = new BookCategory(name);
@@ -58,7 +58,7 @@ public class CategoriesController {
     }
 
     @DeleteMapping("/user/{id}/manage_books/delete_category/{category_id}")
-    public ModelAndView deleteUser(@PathVariable("id") Long id,
+    public ModelAndView deleteCategory(@PathVariable("id") Long id,
                                    @PathVariable("category_id") Long categoryId) {
         User currentUser = userRepository.findById(id).get();
         BookCategory category = categoryRepository.findById(categoryId).get();
@@ -68,5 +68,20 @@ public class CategoriesController {
         LOGGER.info(Const.CATEGORY_DELETED_LOG);
 
         return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+    }
+
+    @PutMapping("/user/{id}/manage_books/edit_category/{category_id")
+    public ModelAndView updateAuthor(@PathVariable("id") Long id,
+                                     @PathVariable("category_id") Long categoryId,
+                                     @ModelAttribute("name") String name) {
+        User currentUser = userRepository.findById(id).get();
+        BookCategory category = categoryRepository.findById(categoryId).get();
+        category.setName(name);
+        categoryRepository.save(category);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.AUTHOR_UPDATED_LOG);
+
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
 }

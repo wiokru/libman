@@ -1,7 +1,6 @@
 package com.wiokru.library.controllers;
 
 import com.wiokru.library.entity.Borrowed;
-import com.wiokru.library.entity.Reserved;
 import com.wiokru.library.entity.User;
 import com.wiokru.library.repositories.BorrowedRepository;
 import com.wiokru.library.repositories.ReservedRepository;
@@ -54,6 +53,19 @@ public class ManageBorrowedController {
 
 
     @GetMapping("/user/{id}/manage_books/borrowed/return/{borrowed_id}")
+    public ModelAndView rejectReservedForThymeleaf(@PathVariable("id") Long id,
+                                       @PathVariable("borrowed_id") Long borrowed_id) {
+        User currentUser = userRepository.findById(id).get();
+        Borrowed borrowed = borrowedRepository.findById(borrowed_id).get();
+
+        borrowedRepository.delete(borrowed);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.BOOK_RETURNED_LOG);
+
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books/borrowed");
+    }
+
     @DeleteMapping("/user/{id}/manage_books/borrowed/return/{borrowed_id}")
     public ModelAndView rejectReserved(@PathVariable("id") Long id,
                                        @PathVariable("borrowed_id") Long borrowed_id) {

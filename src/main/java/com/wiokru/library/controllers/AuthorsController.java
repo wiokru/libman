@@ -24,7 +24,7 @@ public class AuthorsController {
 
 
     @GetMapping("user/{id}/manage_books/add_author")
-    public ModelAndView addBookForm(@PathVariable("id") Long id) {
+    public ModelAndView addAuthorForm(@PathVariable("id") Long id) {
         User currentUser = userRepository.findById(id).get();
 
         ModelAndView modelAndView = new ModelAndView("add_author_form");
@@ -33,8 +33,8 @@ public class AuthorsController {
     }
 
     @PostMapping("user/{id}/manage_books/add_author")
-    public ModelAndView addNewBook(@PathVariable("id") Long id,
-                                   @ModelAttribute("name") String name) {
+    public ModelAndView addNewAuthor(@PathVariable("id") Long id,
+                                     @ModelAttribute("name") String name) {
         User currentUser = userRepository.findById(id).get();
         Author newAuthor = new Author(name);
 
@@ -57,8 +57,8 @@ public class AuthorsController {
     }
 
     @DeleteMapping("/user/{id}/manage_books/delete_author/{author_id}")
-    public ModelAndView deleteUser(@PathVariable("id") Long id,
-                                   @PathVariable("author_id") Long authorId) {
+    public ModelAndView deleteAuthor(@PathVariable("id") Long id,
+                                     @PathVariable("author_id") Long authorId) {
         User currentUser = userRepository.findById(id).get();
         Author author = authorRepository.findById(authorId).get();
         authorRepository.delete(author);
@@ -66,6 +66,21 @@ public class AuthorsController {
         LOGGER.setLevel(Level.INFO);
         LOGGER.info(Const.AUTHOR_DELETED_LOG);
 
-        return new ModelAndView ("redirect:/user/" + currentUser.getId() + "/manage_books");
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
+    }
+
+    @PutMapping("/user/{id}/manage_books/edit_author/{author_id}")
+    public ModelAndView updateAuthor(@PathVariable("id") Long id,
+                                     @PathVariable("author_id") Long authorId,
+                                     @ModelAttribute("name") String name) {
+        User currentUser = userRepository.findById(id).get();
+        Author author = authorRepository.findById(authorId).get();
+        author.setName(name);
+        authorRepository.save(author);
+
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info(Const.AUTHOR_UPDATED_LOG);
+
+        return new ModelAndView("redirect:/user/" + currentUser.getId() + "/manage_books");
     }
 }
