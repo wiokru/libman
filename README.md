@@ -118,3 +118,11 @@ From there you can register a new account - click on "Sign up now" and you will 
 There are use cases for each role. Please keep in mind that permissions are inherited (as described erlier), so even tho there is no use case diagram for book reservation by admin he still can do this, cause he is also a user.
 ![alt text](https://github.com/wiokru/libman/blob/master/images/usecase1.jpg)
 
+##Postman requests
+
+In this repo there is a json file with sample postman request to test app functionalities. 
+There are 4 tests for each HTTP method - GET/POST/DELETE/PUT.
+However in app there is a lot more of them - can be seen on UI. 
+[a link](https://github.com/wiokru/libman/blob/master/postman/LibMan.postman_collection.json)
+
+

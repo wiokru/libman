@@ -1,0 +1,750 @@
+{
+	"info": {
+		"_postman_id": "7cc3671e-7502-469e-b7d7-5e5f517ad5ad",
+		"name": "LibMan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get books list on home page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/1/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user list on manage users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get reservations list on manage reservations view",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/reservations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get borrowed list on manage borrowed view",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/borrowed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"borrowed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post - add new author",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Lorem Ipsum Author",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/add_author",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"add_author"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post - add new category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Dolor sit amet category",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/add_category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"add_category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post - add new book",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Lorem Ipsum",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+							"type": "text"
+						},
+						{
+							"key": "publisher",
+							"value": "LoremIpsum",
+							"type": "text"
+						},
+						{
+							"key": "published_date",
+							"value": "1996",
+							"type": "text"
+						},
+						{
+							"key": "page_count",
+							"value": "150",
+							"type": "text"
+						},
+						{
+							"key": "selected_author",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "selected_author",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "selected_category",
+							"value": "1",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/add_book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"add_book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post - add new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Test User",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "User Test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "user3@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Lublin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "789456123",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete - delete author",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "author_id",
+							"value": "22",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/delete_author/22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"delete_author",
+						"22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete - delete book category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "author_id",
+							"value": "40",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/delete_category/40",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"delete_category",
+						"40"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete - delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "author_id",
+							"value": "3",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_users/delete/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_users",
+						"delete",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete - delete book",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "book_id",
+							"value": "9",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/delete/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"delete",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put - user edits his info",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "After Edit Name",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "After Edit Surname",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "admin@maill.com",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Lublin",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "789456123",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/my_info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"my_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put - edit user by admin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "After Edit Name",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "After Edit Surname",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "updated.user@maill.com",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Lublin",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "789456123",
+							"type": "text"
+						},
+						{
+							"key": "selected_roles",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "selected_roles",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "selected_roles",
+							"value": "3",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_users/edit/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_users",
+						"edit",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put - edit book",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "book_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": " After Update Title",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": " Updated description Lorem Ipsum dolor sit amet",
+							"type": "text"
+						},
+						{
+							"key": "publisher",
+							"value": "LoremIpsum",
+							"type": "text"
+						},
+						{
+							"key": "published_date",
+							"value": "1996",
+							"type": "text"
+						},
+						{
+							"key": "page_count",
+							"value": "150",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/edit/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"edit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put - edit author",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Author Name After Update",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1/manage_books/edit_author/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1",
+						"manage_books",
+						"edit_author",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
