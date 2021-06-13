@@ -48,19 +48,23 @@ public class ManageBooksControllerTest {
         Mockito.when(authorRepository.findById((long) 1)).thenReturn(Optional.of(author));
         Mockito.when(authorRepository.findAll()).thenReturn(Arrays.asList(author));
 
-        Book book1 = new Book("Test1", "Test1", "10.10.2015", "test book1", 324 );
+        Book book1 = new Book("Test1", "Test1", "10.10.2015",
+                "test book1", 324 );
         book1.setId((long) 1);
         book1.setCategories(categories);
         book1.setAuthors(authors);
-        Book book2 = new Book("Test2", "Test2", "15.11.2016", "test book2", 225 );
+        Book book2 = new Book("Test2", "Test2", "15.11.2016",
+                "test book2", 225 );
         book2.setId((long) 2);
         book2.setCategories(categories);
         book2.setAuthors(authors);
-        Book book3 = new Book("Test3", "Test3", "17.10.2017", "test book3", 390 );
+        Book book3 = new Book("Test3", "Test3", "17.10.2017",
+                "test book3", 390 );
         book3.setId((long) 3);
         book3.setCategories(categories);
         book3.setAuthors(authors);
-        Book book4 = new Book("Test4", "Test4", "25.01.2020", "test book4", 340 );
+        Book book4 = new Book("Test4", "Test4", "25.01.2020",
+                "test book4", 340 );
         List<Book> books = new ArrayList<Book>(){{add(book1); add(book2); add(book3);}};
         Mockito.when(bookRepository.findAll()).thenReturn(books);
         Mockito.when(bookRepository.findById((long) 1)).thenReturn(Optional.of(book1));
@@ -71,7 +75,8 @@ public class ManageBooksControllerTest {
         Role userRole = new Role(Roles.USER.toString());
         Mockito.when(roleRepository.findByName(Roles.USER.toString())).thenReturn(userRole);
 
-        User user = new User("test@mail.com", "Test", "Test", "password", "Lublin", "789456123");
+        User user = new User("test@mail.com", "Test", "Test", "password",
+                "Lublin", "789456123");
         user.addRole(roleRepository.findByName(Roles.USER.toString()));
         user.setId((long) 1);
         Mockito.when(userRepository.findById((long) 1)).thenReturn(Optional.of(user));
@@ -87,8 +92,7 @@ public class ManageBooksControllerTest {
     public void searchBooksTest() {
         ModelAndView modelAndView = manageBooksController.searchBooks((long) 1, "Test");
         Assertions.assertEquals("manage_books", modelAndView.getViewName());
-        List<Book> books = (List<Book>) modelAndView.getModel().get("bookList");
-        Assertions.assertEquals(3, books.size());
+        Assertions.assertEquals(3, ((List<Book>) modelAndView.getModel().get("bookList")).size());
     }
 
     @Test
@@ -100,12 +104,13 @@ public class ManageBooksControllerTest {
     @Test
     public void editBookFormTest() {
         ModelAndView modelAndView = manageBooksController.deleteBook((long) 1, (long) 1);
-        Assertions.assertEquals("book_edit_form", modelAndView.getViewName());
+        Assertions.assertEquals("redirect:/user/1/manage_books", modelAndView.getViewName());
     }
 
     @Test
     public void saveEditBookTest() {
-        ModelAndView modelAndView = manageBooksController.saveEditBook((long) 1, (long) 1,"Test1Update", "test book1 update", "Test1 update",  "10.10.2015", 324);
+        ModelAndView modelAndView = manageBooksController.saveEditBook((long) 1, (long) 1,"Test1Update",
+                "test book1 update", "Test1 update",  "10.10.2015", 324);
         Assertions.assertEquals("book_edit_form", modelAndView.getViewName());
         Assertions.assertEquals(Const.BOOK_UPDATED_SUCCESS, modelAndView.getModelMap().get("message"));
         Assertions.assertTrue((Boolean) modelAndView.getModelMap().get("is_success"));
@@ -113,7 +118,8 @@ public class ManageBooksControllerTest {
 
     @Test
     public void saveEditBookFailureTest() {
-        ModelAndView modelAndView = manageBooksController.saveEditBook((long) 1, (long) 3,"Test3", "test book3", "Test3",  "17.10.2017", 390);
+        ModelAndView modelAndView = manageBooksController.saveEditBook((long) 1, (long) 3,"Test3",
+                "test book3", "Test3",  "17.10.2017", 390);
         Assertions.assertEquals("book_edit_form", modelAndView.getViewName());
         Assertions.assertEquals(Const.BOOK_UPDATED_ERROR, modelAndView.getModelMap().get("message"));
         Assertions.assertFalse((Boolean) modelAndView.getModelMap().get("is_success"));
@@ -127,13 +133,17 @@ public class ManageBooksControllerTest {
 
     @Test
     public void addNewBookTest() {
-        ModelAndView modelAndView = manageBooksController.addNewBook((long) 1,"New Book", "test new book insert", "Test",  "10.10.2015", "324", Arrays.asList((long) 1), Arrays.asList((long) 1));
+        ModelAndView modelAndView = manageBooksController.addNewBook((long) 1,"New Book",
+                "test new book insert", "Test",  "10.10.2015",
+                "324", Arrays.asList((long) 1), Arrays.asList((long) 1));
         Assertions.assertEquals("redirect:/user/1/manage_books", modelAndView.getViewName());
     }
 
     @Test
     public void addNewBookFailureTest() {
-        ModelAndView modelAndView = manageBooksController.addNewBook((long) 1,"Test4", "test book4", "Test4",  "25.01.2020", "340", null, null);
+        ModelAndView modelAndView = manageBooksController.addNewBook((long) 1,"Test4",
+                "test book4", "Test4",  "25.01.2020", "340",
+                null, null);
         Assertions.assertEquals("add_book_form", modelAndView.getViewName());
         Assertions.assertEquals(Const.SAVING_BOOK_ERROR_LOG, modelAndView.getModelMap().get("message"));
     }

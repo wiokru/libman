@@ -146,7 +146,7 @@ public class ManageBooksController {
             modelAndView.addObject("currentUser", currentUser);
             modelAndView.addObject("selectedBook", book);
             modelAndView.addObject("is_success", Boolean.FALSE);
-            modelAndView.addObject("message", Const.BOOK_UPDATED_ERROR + e.getMessage());
+            modelAndView.addObject("message", Const.BOOK_UPDATED_ERROR);
             return modelAndView;
         }
     }

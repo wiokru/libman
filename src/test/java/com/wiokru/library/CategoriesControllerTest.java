@@ -53,7 +53,8 @@ public class CategoriesControllerTest {
         Role userRole = new Role(Roles.USER.toString());
         Mockito.when(roleRepository.findByName(Roles.USER.toString())).thenReturn(userRole);
 
-        User user = new User("test@mail.com", "Test", "Test", "password", "Lublin", "789456123");
+        User user = new User("test@mail.com", "Test", "Test", "password",
+                "Lublin", "789456123");
         user.addRole(roleRepository.findByName(Roles.USER.toString()));
         user.setId((long) 1);
         Mockito.when(userRepository.findById((long) 1)).thenReturn(Optional.of(user));

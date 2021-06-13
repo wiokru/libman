@@ -1,6 +1,6 @@
 package com.wiokru.library;
 
-import com.wiokru.library.controllers.HomeController;
+import com.wiokru.library.controllers.SignUpController;
 import com.wiokru.library.entity.Role;
 import com.wiokru.library.entity.Roles;
 import com.wiokru.library.entity.User;
@@ -17,25 +17,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class HomeControllerTest {
+public class SignUpControllerTest {
 
     @Autowired
     @InjectMocks
-    private HomeController homeController;
+    private SignUpController signUpController;
 
     private UserRepository userRepository = Mockito.mock(UserRepository.class);
     private RoleRepository roleRepository = Mockito.mock(RoleRepository.class);
 
     @MockBean
     private Model model;
+
+    @MockBean
+    private HttpServletResponse response;
 
     @BeforeEach
     public void setUp() {
@@ -44,35 +48,41 @@ public class HomeControllerTest {
         Role userRole = new Role(Roles.USER.toString());
         Mockito.when(roleRepository.findByName(Roles.USER.toString())).thenReturn(userRole);
 
-        User user = new User("test@mail.com", "Test", "Test", "password",
-                "Lublin", "789456123");
+        User user = new User("test@mail.com", "Test", "Test",
+                "password", "Lublin", "789456123");
         user.addRole(roleRepository.findByName(Roles.USER.toString()));
         user.setId((long) 1);
+
+        User userFailure = new User("test.fail@mail.com", "Test", "Failure",
+                "password", "Lublin", "789456123");
+        userFailure.addRole(roleRepository.findByName(Roles.USER.toString()));
         Mockito.when(userRepository.findByEmail("test@mail.com")).thenReturn(Optional.of(user));
+        Mockito.doThrow(DataIntegrityViolationException.class).when(userRepository).save(userFailure);
+
     }
 
     @Test
     public void homeTest() {
-        ModelAndView modelAndView = homeController.home();
-        Assertions.assertEquals("home", modelAndView.getViewName());
+        ModelAndView modelAndView = signUpController.signup(model);
+        Assertions.assertEquals("signup", modelAndView.getViewName());
     }
 
     @Test
-    public void loginTest() throws Exception {
-        ModelAndView modelAndView = homeController.login(model, "test@mail.com", "password");
-        Assertions.assertEquals("redirect:/user/1/home", modelAndView.getViewName());
+    public void registerUserTest() {
+        ModelAndView modelAndView = signUpController.registerUser(model,
+                response, "Test1", "Test1", "test1@mail.com", "City",
+                "password1", "789456132");
+
+        Assertions.assertEquals("redirect:/", modelAndView.getViewName());
     }
 
     @Test
-    public void loginTestWrongPassword() throws Exception {
-        ModelAndView modelAndView = homeController.login(model, "test@mail.com", "password1");
-        Assertions.assertEquals(Const.INCORRECT_PASSWORD, modelAndView.getModel().get("error_message"));
-    }
+    public void registerUserFailureTest() {
+        ModelAndView modelAndView = signUpController.registerUser(model,
+                response, "Test", "Failure", "test.fail@mail.com", "Lublin",
+                "password", "789456123");
 
-    @Test
-    public void loginTestWrongEmail() throws Exception {
-        ModelAndView modelAndView = homeController.login(model, "test1@mail.com", "password");
-        Assertions.assertEquals(Const.USER_DONT_EXISTS, modelAndView.getModel().get("error_message"));
+        Assertions.assertEquals("signup", modelAndView.getViewName());
+        Assertions.assertEquals(Const.SIGNUP_ERROR_MESSAGE, modelAndView.getModelMap().get("error_message"));
     }
-
 }

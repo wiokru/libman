@@ -46,7 +46,8 @@ public class ManageReservationsControllerTest {
             add(author);
         }};
 
-        Book book1 = new Book("Test1", "Test1", "10.10.2015", "test book1", 324);
+        Book book1 = new Book("Test1", "Test1", "10.10.2015",
+                "test book1", 324);
         book1.setId((long) 1);
         book1.setCategories(categories);
         book1.setAuthors(authors);
@@ -54,7 +55,8 @@ public class ManageReservationsControllerTest {
         Role userRole = new Role(Roles.USER.toString());
         Mockito.when(roleRepository.findByName(Roles.USER.toString())).thenReturn(userRole);
 
-        User user = new User("test@mail.com", "Test", "Test", "password", "Lublin", "789456123");
+        User user = new User("test@mail.com", "Test", "Test",
+                "password", "Lublin", "789456123");
         user.addRole(roleRepository.findByName(Roles.USER.toString()));
         user.setId((long) 1);
         Mockito.when(userRepository.findById((long) 1)).thenReturn(Optional.of(user));
@@ -69,14 +71,14 @@ public class ManageReservationsControllerTest {
     public void manageReservationsFormTest() {
         ModelAndView modelAndView = manageReservationsController.manageReservations((long) 1);
         Assertions.assertEquals("manage_reservations", modelAndView.getViewName());
-        Assertions.assertEquals(1, ((List<Borrowed>) modelAndView.getModelMap().get("reservedList")).size());
+        Assertions.assertEquals(1, ((List<Reserved>) modelAndView.getModelMap().get("reservedList")).size());
     }
 
     @Test
     public void searchReservationsTest() {
         ModelAndView modelAndView = manageReservationsController.searchReservations((long) 1, "test");
         Assertions.assertEquals("manage_reservations", modelAndView.getViewName());
-        Assertions.assertEquals(1, ((List<Borrowed>) modelAndView.getModelMap().get("reservedList")).size());
+        Assertions.assertEquals(1, ((List<Reserved>) modelAndView.getModelMap().get("reservedList")).size());
     }
 
     @Test
