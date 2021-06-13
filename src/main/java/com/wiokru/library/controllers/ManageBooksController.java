@@ -242,16 +242,20 @@ public class ManageBooksController {
         Book newBook = new Book(title, publisher, publishedDate, description, Integer.valueOf(pageCount));
 
         Set<Author> authorSet = new HashSet<>();
-        for (Long authorId : authorsIds) {
-            authorSet.add(authorRepository.findById(authorId).get());
+        if(authorsIds != null) {
+            for (Long authorId : authorsIds) {
+                authorSet.add(authorRepository.findById(authorId).get());
+            }
+            newBook.setAuthors(authorSet);
         }
-        newBook.setAuthors(authorSet);
 
         Set<BookCategory> bookCategories = new HashSet<>();
-        for (Long bookCatId : categoriesIds) {
-            bookCategories.add(categoryRepository.findById(bookCatId).get());
+        if(categoriesIds != null) {
+            for (Long bookCatId : categoriesIds) {
+                bookCategories.add(categoryRepository.findById(bookCatId).get());
+            }
+            newBook.setCategories(bookCategories);
         }
-        newBook.setCategories(bookCategories);
         return newBook;
     }
 }

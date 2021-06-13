@@ -25,7 +25,7 @@ public class Const {
     public static final String USER_UPDATED_SUCCESS = "User updated successfully.";
     public static final String BOOK_UPDATED_SUCCESS = "Book updated successfully.";
     public static final String USER_UPDATED_ERROR = "An error occurred: ";
-    public static final String BOOK_UPDATED_ERROR = "An error occurred: ";
+    public static final String BOOK_UPDATED_ERROR = "An error occurred while updating the book.";
     public static final String USER_UPDATED_SUCCESS_LOG = " user updated successfully.";
     public static final String BOOK_UPDATED_SUCCESS_LOG = " book updated successfully.";
     public static final String USER_UPDATED_ERROR_LOG = " an error occurred while updating: ";
