@@ -40,13 +40,15 @@ List of books can be filtered by author, title or publisher (both on main books 
 
 
 ## What was used and how to run
-1. Java 11
+1. Java 8
 2. Maven 3.6.3
 3. PostreSQL ver. 12.3
 4. Docker - to hold local database
 5. Spring boot
 6. Hibernate
-6. Thymeleaf
+7. Thymeleaf
+8. JUnit 5.6.0
+9. Mockito 3.2.4
 
 **Running project**
 
